@@ -1,0 +1,36 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    margin-top: 20px;
+    width: 100%;
+
+    .navbar-container {
+        width: 80%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    ul {
+        display: flex;
+
+        li {
+            list-style: none;
+            padding-left: 50px;
+
+            a {
+                list-style: none;
+                color: white;
+                text-decoration: none;
+                transition: .5s;
+                padding-left: 50px;
+
+                &:hover {
+                    color: #ff4545;
+                }
+            }
+        }
+    }
+}
