@@ -1,11 +1,11 @@
 <template>
   <div class="filters-container">
-    <app-filter v-for="filter in $store.state.filters" :name="filter.name" :key="filter.naem + Math.random()"></app-filter>
+    <app-filter>{{ $store.state.cityFilter }}</app-filter>
   </div>
   <app-searchbar></app-searchbar>
   <div class="movies-container">
     <app-movie-card
-      v-for="movie in $store.state.movies"
+      v-for="movie in dataFiltered"
       :url="movie.info.image_url"
       :title="movie.title"
       :plot="movie.info.plot"
@@ -22,6 +22,16 @@ import AppFilter from '../components/AppFilter'
 export default {
   mounted () {
     this.$store.commit('getMovies')
+    this.$store.commit('getSessions')
+  },
+  computed: {
+    dataFiltered () {
+      return this.$store.state.movies.filter(movie =>
+        (movie.title + movie.info.plot)
+          .toLowerCase()
+          .includes(this.$store.state.search.toLowerCase())
+      )
+    }
   },
   components: {
     AppSearchbar,
