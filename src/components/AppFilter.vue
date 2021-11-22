@@ -1,63 +1,92 @@
 <template>
-  <div class="filter-container">
-    <button class="filter">{{ name }}</button>
-    <select>
-      <option>
-          <label for="city1">City 1</label>
-          <input name="cities" v-model="filterOption" type="checkbox" value="city1" />
-      </option>
-      <option>
-        <input name="cities" v-model="filterOption" type="checkbox" value="city2" />
-      </option>
-      <option>
-        <input name="cities" v-model="filterOption" type="checkbox" value="city3" />
-      </option>
-    </select>
+  <div class="filter-container" v-click-outside="onClickOutside">
+    <button class="filter" @click="isOpen = !isOpen">{{ filterName }}</button>
+    <form v-if="isOpen">
+      <div
+        @change="changeHandler"
+        class="checkbox"
+        v-for="item in $store.state[filterName]"
+        :key="item.id"
+      >
+        <label>
+          <input v-model="options" type="checkbox" :value="item.id" name="options" />
+          {{item.name}}
+        </label>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
+import vClickOutside from 'click-outside-vue3'
+
 export default {
   data () {
     return {
-      filterOption: ''
+      options: [],
+      isOpen: false
     }
   },
-  props: ['name'],
-  computed: {
-
+  props: ['filterName'],
+  emits: ['change-filters'],
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
+  methods: {
+    changeHandler () {
+      this.$store.state.filters.options = this.options
+      this.$emit('change-filters')
+    },
+    onClickOutside () {
+      this.isOpen = false
+    }
+  },
+  mounted () {
+    this.$store.commit('getCities')
+    this.$store.commit('getCinemas')
+    this.$store.commit('getDates')
+    this.$store.commit('getTimeslots')
   }
 }
 </script>
 
 <style lang="scss">
-
 .filter-container {
+  position: relative;
+  height: 30px;
+
+  form {
+    z-index: 2;
     position: relative;
+  }
+
+  .filter {
+    width: 200px;
     height: 30px;
+    color: white;
+    background-color: #1e1e1e;
+    border: white 2px solid;
+    align-items: center;
+    display: flex;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+  }
 
-    .filter {
-        width: 200px;
-        height: 30px;
-        color: white;
-        background-color: transparent;
-        border: white 2px solid;
-        align-items: center;
-        display: flex;
-        justify-content: center;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }
+  .form-checkbox {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background: white;
+    border: none;
+    color: #1e1e1e;
+    outline: none;
+  }
 
-    select {
-        position: absolute;
-        height: 100%;
-        top: 0;
-        right: 0;
-        background: transparent;
-        border: none;
-        color: white;
-        outline: none;
-    }
+  .checkbox {
+    background: white;
+    color: #1e1e1e;
+  }
 }
 </style>
