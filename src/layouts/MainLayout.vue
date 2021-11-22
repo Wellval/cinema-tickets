@@ -21,5 +21,6 @@ export default {
         justify-content: center;
         display: flex;
         flex-direction: column;
+        position: relative;
     }
 </style>

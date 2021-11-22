@@ -4,6 +4,7 @@
       <i class="fas fa-search"></i>
     </button>
     <input
+      @input="$emit('input-changed')"
       v-model="$store.state.search"
       type="text"
       class="input-search"
@@ -11,9 +12,3 @@
     />
   </form>
 </template>
-
-<script>
-export default {
-
-}
-</script>

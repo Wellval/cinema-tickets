@@ -1,5 +1,6 @@
 <template>
-  <app-searchbar></app-searchbar>
+  <app-searchbar @input-changed="addFilters"></app-searchbar>
+  <app-prompt @choose-movie="chooseMovie" :moviesSearched="moviesSearched"></app-prompt>
   <div class="filters-container">
     <app-filter
       @change-filters="addFilters"
@@ -23,6 +24,7 @@
 import AppSearchbar from '../components/AppSearchbar'
 import AppMovieCard from '../components/AppMovieCard'
 import AppFilter from '../components/AppFilter'
+import AppPrompt from '../components/AppPrompt'
 
 export default {
   async mounted () {
@@ -65,12 +67,18 @@ export default {
           movies.includes(movie.title)
         )
       } else this.moviesFiltered = this.$store.state.movies
+    },
+    chooseMovie (movieTitle) {
+      this.moviesFiltered = this.moviesFiltered.filter(
+        m => m.title === movieTitle
+      )
     }
   },
   components: {
     AppSearchbar,
     AppMovieCard,
-    AppFilter
+    AppFilter,
+    AppPrompt
   }
 }
 </script>
