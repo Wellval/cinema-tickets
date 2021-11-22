@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     changeHandler () {
-      this.$store.state.filters.options = this.options
+      this.$store.state.filters[this.filterName] = this.options
       this.$emit('change-filters')
     },
     onClickOutside () {

@@ -25,7 +25,8 @@ export default {
 .prompt-container {
   position: absolute;
   width: auto;
-  height: 200px;
+  min-height: 50px;
+  max-height: 200px;
   overflow-y: auto;
   top: 58px;
   background: white;
@@ -42,4 +43,8 @@ export default {
     }
   }
 }
+
+.input-search:focus ~ .prompt {
+          color: yellowgreen;
+    }
 </style>

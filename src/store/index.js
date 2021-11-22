@@ -13,8 +13,10 @@ export default createStore({
       cities: [],
       filtered: '',
       filters: {
-        names: ['cinemas', 'cities', 'dates', 'timeslots'],
-        options: []
+        cinemas: [],
+        cities: [],
+        dates: [],
+        timeslots: []
       }
     }
   },

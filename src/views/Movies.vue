@@ -5,9 +5,9 @@
     <app-filter
       @change-filters="addFilters"
       :filterName="filterName"
-      v-for="filterName in $store.state.filters.names"
+      v-for="filterName in Object.keys($store.state.filters)"
       :key="filterName"
-    >{{ $store.state.cityFilter }}</app-filter>
+    ></app-filter>
   </div>
   <div class="movies-container">
     <app-movie-card
@@ -25,6 +25,13 @@ import AppSearchbar from '../components/AppSearchbar'
 import AppMovieCard from '../components/AppMovieCard'
 import AppFilter from '../components/AppFilter'
 import AppPrompt from '../components/AppPrompt'
+
+const propsMappings = {
+  cinemas: 'cinemaId',
+  cities: 'cityId',
+  dates: 'dateId',
+  timeslots: 'timeslotId'
+}
 
 export default {
   async mounted () {
@@ -51,18 +58,29 @@ export default {
     }
   },
   methods: {
+    verifySession (session, filters) {
+      for (const key of Object.keys(propsMappings)) {
+        if (
+          filters[key].length > 0 &&
+          !filters[key].includes(session[propsMappings[key]])
+        ) {
+          return false
+        }
+      }
+      return true
+    },
     addFilters () {
       this.sessions = this.$store.state.sessions.filter(session =>
-        [
-          session.cinemaId,
-          session.cityId,
-          session.dateId,
-          session.timeslotId
-        ].some(x => this.$store.state.filters.options.some(y => x === y))
+        this.verifySession(session, this.$store.state.filters)
       )
-      const movies = []
-      this.sessions.map(session => movies.push(session.movieTitle))
-      if (this.$store.state.filters.options.length !== 0) {
+      const movies = [
+        ...new Set(this.sessions.map(session => session.movieTitle))
+      ]
+      if (
+        Object.keys(propsMappings).some(
+          x => this.$store.state.filters[x].length !== 0
+        )
+      ) {
         this.moviesFiltered = this.$store.state.movies.filter(movie =>
           movies.includes(movie.title)
         )
