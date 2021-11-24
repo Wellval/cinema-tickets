@@ -6,6 +6,10 @@
     margin-bottom: 30px;
     transition: .7s;
 
+    a {
+      margin-top: auto;
+    }
+
     &:hover {
         cursor: pointer;
         transition: .7s;

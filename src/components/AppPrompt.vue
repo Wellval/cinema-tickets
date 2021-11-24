@@ -1,7 +1,7 @@
 <template>
   <div
     class="prompt-container"
-    v-if="moviesSearched.length < $store.state.movies.length
+    v-if="moviesSearched.length !== 0
       && moviesSearched.length !== 1
       && moviesSearched.length !== $store.state.movies.length"
   >
@@ -25,6 +25,7 @@ export default {
 .prompt-container {
   position: absolute;
   width: auto;
+  min-width: 150px;
   min-height: 50px;
   max-height: 200px;
   overflow-y: auto;

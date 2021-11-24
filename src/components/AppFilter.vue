@@ -42,10 +42,10 @@ export default {
     }
   },
   mounted () {
-    this.$store.commit('getCities')
-    this.$store.commit('getCinemas')
-    this.$store.commit('getDates')
-    this.$store.commit('getTimeslots')
+    this.$store.dispatch('getCities')
+    this.$store.dispatch('getCinemas')
+    this.$store.dispatch('getDates')
+    this.$store.dispatch('getTimeslots')
   }
 }
 </script>

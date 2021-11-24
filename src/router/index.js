@@ -17,8 +17,16 @@ const routes = [
     },
     component: () => import('../views/Movies.vue'),
     alias: '/'
+  },
+  {
+    path: '/movie/:movieId',
+    name: 'Movie',
+    meta: {
+      layout: 'main'
+    },
+    props: true,
+    component: () => import('../views/Movie.vue')
   }
-
 ]
 
 const router = createRouter({

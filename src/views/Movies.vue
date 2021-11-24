@@ -14,10 +14,12 @@
       v-for="movie in moviesSearched"
       :url="movie.info.image_url"
       :title="movie.title"
+      :id="movie.id"
       :plot="movie.info.plot"
       :key="movie.title + Math.random()"
     />
   </div>
+  <div v-if="moviesSearched.length === 0">No movies with this parameters</div>
 </template>
 
 <script>
@@ -36,7 +38,7 @@ const propsMappings = {
 export default {
   async mounted () {
     await this.$store.dispatch('getMovies')
-    this.$store.commit('getSessions')
+    await this.$store.dispatch('getSessions')
     this.moviesFiltered = this.$store.state.movies
     this.sessions = this.$store.state.sessions
   },
