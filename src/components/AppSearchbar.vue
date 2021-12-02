@@ -12,3 +12,9 @@
     />
   </form>
 </template>
+
+<script>
+export default {
+  emits: ['input-changed']
+}
+</script>

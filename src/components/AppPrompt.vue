@@ -7,9 +7,9 @@
   >
     <div
       class="prompt"
-      @click="$emit('choose-movie', movie.title)"
+      @click="$emit('choose-movie', movie._id)"
       v-for="movie in moviesSearched"
-      :key="movie.title"
+      :key="movie.id"
     >{{ movie.title }}</div>
   </div>
 </template>

@@ -12,10 +12,10 @@
   <div class="movies-container">
     <app-movie-card
       v-for="movie in moviesSearched"
-      :url="movie.info.image_url"
+      :url="movie.image_url"
       :title="movie.title"
-      :id="movie.id"
-      :plot="movie.info.plot"
+      :id="movie._id"
+      :plot="movie.plot"
       :key="movie.title + Math.random()"
     />
   </div>
@@ -42,9 +42,11 @@ export default {
     this.moviesFiltered = this.$store.state.movies
     this.sessions = this.$store.state.sessions
   },
+  updated () {
+    console.log('upd')
+  },
   data () {
     return {
-      movieTitles: [],
       moviesFiltered: [],
       sessions: []
     }
@@ -88,9 +90,9 @@ export default {
         )
       } else this.moviesFiltered = this.$store.state.movies
     },
-    chooseMovie (movieTitle) {
+    chooseMovie (movieId) {
       this.moviesFiltered = this.moviesFiltered.filter(
-        m => m.title === movieTitle
+        m => m.title === movieId
       )
     }
   },

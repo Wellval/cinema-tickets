@@ -3,18 +3,17 @@
 </template>
 
 <script>
-import EmptyLayout from './layouts/EmptyLayout'
 import MainLayout from './layouts/MainLayout'
 import TheHeader from './components/TheHeader'
 
 export default {
   computed: {
     layout () {
-      return (this.$route.meta.layout || 'empty') + '-layout'
+      return (this.$route.meta.layout) + '-layout'
     }
   },
   components: {
-    TheHeader, MainLayout, EmptyLayout
+    TheHeader, MainLayout
   }
 }
 </script>

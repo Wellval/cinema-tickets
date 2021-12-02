@@ -1,11 +1,16 @@
 @import './the-navbar.scss';
 @import './searchbar.scss';
 @import './app-movie-card.scss';
+@import './modal-window.scss';
 
+html {
+    height: 100vh;
+}
 
 body {
     margin: 0;
     padding: 0;
+    height: 100%;
     color: white;
     box-sizing: border-box;
     font-weight: 700;
@@ -28,8 +33,13 @@ a {
 
 p, ul li a {
     letter-spacing: 2px;
+    transition: .5s;
 }
 
 p {
     font-weight: 400;
+}
+
+.router-link-active.router-link-exact-active {
+    color: #ff4545;
 }

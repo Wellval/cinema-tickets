@@ -4,6 +4,7 @@ import axios from 'axios'
 export default createStore({
   state () {
     return {
+      users: [],
       movies: [],
       sessions: [],
       cinemas: [],
@@ -22,7 +23,7 @@ export default createStore({
   },
   actions: {
     getMovies ({ commit }) {
-      return axios.get('https://tickets-9b42e-default-rtdb.firebaseio.com/movies.json')
+      return axios.get('http://localhost:5500/movie/all/list')
         .then(response => response.data)
         .then(items => {
           commit('SET_MOVIES', items)
@@ -69,6 +70,13 @@ export default createStore({
         .then(items => {
           commit('SET_CITIES', items)
         })
+    },
+    getUsers ({ commit }) {
+      return axios.get('https://tickets-users-default-rtdb.firebaseio.com/users.json')
+        .then(response => response.data)
+        .then(items => {
+          commit('SET_USERS', items)
+        })
     }
   },
   mutations: {
@@ -92,6 +100,9 @@ export default createStore({
     },
     SET_CITIES (state, cities) {
       state.cities = cities
+    },
+    SET_USERS (state, users) {
+      state.users = users
     }
   }
 })

@@ -2,14 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
-    path: '/login',
-    name: 'Login',
-    meta: {
-      layout: 'empty'
-    },
-    component: () => import('../views/Login.vue')
-  },
-  {
     path: '/movies',
     name: 'Movies',
     meta: {
@@ -26,6 +18,15 @@ const routes = [
     },
     props: true,
     component: () => import('../views/Movie.vue')
+  },
+  {
+    path: '/manage',
+    name: 'Manage',
+    meta: {
+      layout: 'main'
+    },
+    props: true,
+    component: () => import('../views/Manage.vue')
   }
 ]
 

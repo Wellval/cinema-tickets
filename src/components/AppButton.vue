@@ -1,12 +1,6 @@
 <template>
-  <button class="buy-tickets-btn" :disabled="sessions.length === 0">Buy tickets</button>
+  <button class="buy-tickets-btn" ><slot /></button>
 </template>
-
-<script>
-export default {
-  props: ['sessions']
-}
-</script>
 
 <style lang="scss">
 .buy-tickets-btn {
@@ -38,6 +32,15 @@ export default {
       border: grey 2px solid;
       background-color: transparent;
     }
+  }
+}
+.dark-button {
+  color: rgb(30, 30, 30);
+  border: rgb(30, 30, 30) 2px solid;
+
+  &:hover {
+    color: gray;
+    border: grey 2px solid;
   }
 }
 </style>

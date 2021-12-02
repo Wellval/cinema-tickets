@@ -2,26 +2,34 @@
   <div>
     <div class="movie-sessions-container">
       <img class="main-poster" :src="url" alt srcset />
-      <div class="session-container">
+      <div class="info-container">
+          <h2>{{ movie.title }}</h2>
+          <p>{{ movie.plot }}</p>
+          <p>Rating: {{ movie.rating }}</p>
+      </div>
+    </div>
+    <div class="session-container">
         <div class="session" v-for="session in sessions" :key="session.cityId + Math.random()">
           <div class="session-info">
             <div>
-              <p>{{ ['date', 'hall', 'timeslot']
-                  .map(x => this[x + 's'].find(y => y.id === session[x + 'Id']).name).join(' ') }}</p>
+              <p>
+                {{ ['date', 'hall', 'timeslot']
+                .map(x => this[x + 's'].find(y => y.id === session[x + 'Id']).name).join(' ') }}
+              </p>
               <p>{{ this.cinemas.find(cinema => cinema.id == session.cinemaId).name }}</p>
               <p>{{ this.cities.find(city => city.id == session.cityId).name }}</p>
             </div>
-            <app-buy-button :sessions="sessions"></app-buy-button>
+            <app-button :sessions="sessions">Buy tickets</app-button>
           </div>
           <hr />
         </div>
       </div>
-    </div>
   </div>
 </template>
 
 <script>
-import AppBuyButton from '../components/AppBuyButton'
+import AppButton from '../components/AppButton'
+import axios from 'axios'
 
 export default {
   props: ['movieId'],
@@ -29,7 +37,7 @@ export default {
     return {
       timeslots: [],
       sessions: [],
-      movies: [],
+      movie: '',
       url: '',
       dates: [],
       cinemas: [],
@@ -37,27 +45,38 @@ export default {
       cities: []
     }
   },
+  computed: {
+    pageId () {
+      return this.$route.params.movieId
+    }
+  },
   async created () {
-    await this.$store.dispatch('getMovies')
     await this.$store.dispatch('getSessions')
     await this.$store.dispatch('getDates')
     await this.$store.dispatch('getCinemas')
     await this.$store.dispatch('getHalls')
     await this.$store.dispatch('getTimeslots')
     await this.$store.dispatch('getCities')
-    this.movies = this.$store.state.movies.find(
-      movie => movie.id === this.movieId
-    )
     this.sessions = this.$store.state.sessions.filter(
-      session => session.movieId === this.movies.id
+      session => session.movieId === this.movie._id
     );
     ['cinemas', 'dates', 'halls', 'timeslots', 'cities'].map(
       x => (this[x] = this.$store.state[x])
     )
-    this.url = this.movies.info.image_url
+    this.url = this.movie.image_url
+  },
+  mounted () {
+    this.asyncData()
+  },
+
+  methods: {
+    async asyncData () {
+      const { data } = await axios.get(`http://localhost:5500/movie/${this.pageId}`)
+      this.movie = data
+    }
   },
   components: {
-    AppBuyButton
+    AppButton
   }
 }
 </script>
@@ -71,6 +90,11 @@ h2 {
   display: flex;
 }
 
+.info-container {
+    width: 100%;
+    margin-left: 50px;
+}
+
 .session-info {
   display: flex;
   justify-content: space-between;
@@ -79,7 +103,7 @@ h2 {
 
 .session-container {
   width: 100%;
-  margin-left: 50px;
+  margin-top: 50px;
 }
 
 .main-poster {

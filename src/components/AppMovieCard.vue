@@ -11,24 +11,40 @@
       :key="session.timeslotId + Math.random()"
     >{{ session.timeslotId }}</div>
     <router-link :sessions="sessions" :to="{name: 'Movie', params: {movieId: id}}">
-      <app-buy-button :sessions="sessions">Buy tickets</app-buy-button>
+      <app-button>Tickets</app-button>
     </router-link>
+    <app-button @click="deleteMovie">Delete movie</app-button>
   </div>
 </template>
 
 <script>
-import AppBuyButton from './AppBuyButton'
+import AppButton from './AppButton'
+import axios from 'axios'
+
 export default {
   props: ['url', 'title', 'plot', 'id'],
+  emits: ['movieDeleted'],
   computed: {
     sessions () {
       return this.$store.state.sessions.filter(
-        session => session.movieTitle === this.title
+        session => session.movieId === this.id
       )
     }
   },
+  methods: {
+    async deleteMovie () {
+      await axios
+        .delete(`http://localhost:5500/movie/${this.id}`)
+        .then(response => {
+          this.$store.state.movies.splice(this.$store.state.movies.indexOf(this.$store.state.movies.find(movie => movie._id === this.id)), 1)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  },
   components: {
-    AppBuyButton
+    AppButton
   }
 }
 </script>
