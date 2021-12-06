@@ -11,6 +11,8 @@ export default createStore({
       dates: [],
       timeslots: [],
       search: '',
+      token: localStorage.getItem('token'),
+      admin: false,
       cities: [],
       halls: [],
       filters: {

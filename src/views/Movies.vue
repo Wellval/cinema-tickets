@@ -42,9 +42,6 @@ export default {
     this.moviesFiltered = this.$store.state.movies
     this.sessions = this.$store.state.sessions
   },
-  updated () {
-    console.log('upd')
-  },
   data () {
     return {
       moviesFiltered: [],

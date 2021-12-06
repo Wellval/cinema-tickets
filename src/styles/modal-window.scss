@@ -14,7 +14,7 @@
   }
   
   .modal-window-container {
-    width: 45%;
+    width: 40%;
     height: 350px;
     background: white;
     color: rgb(30, 30, 30);
@@ -29,6 +29,18 @@
     z-index: 11;
     position: fixed;
       top: 20%;
+
+    .error-message {
+      color: #ff4545;
+      font-size: 12px;
+      margin: 0;
+    }
+
+    .success-message {
+      color: green;
+      font-size: 12px;
+      margin: 0;
+    }
   
     small {
       font-size: 10px;

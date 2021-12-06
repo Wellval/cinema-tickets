@@ -4,7 +4,7 @@
       <i class="fas fa-search"></i>
     </button>
     <input
-      @input="$emit('input-changed')"
+      @input="inputHandler"
       v-model="$store.state.search"
       type="text"
       class="input-search"
@@ -14,7 +14,18 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  emits: ['input-changed']
-}
+  emits: ["input-changed"],
+  methods: {
+    inputHandler() {
+      this.$emit("input-changed");
+      const { data } = axios.get(
+        "http://localhost:5500/all/searched",
+        this.$store.state.search
+      );
+    }
+  }
+};
 </script>

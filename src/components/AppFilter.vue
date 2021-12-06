@@ -3,7 +3,7 @@
     <button class="filter" @click="isOpen = !isOpen">{{ filterName }}</button>
     <form v-if="isOpen">
       <div
-        @change="changeHandler"
+        @input="changeHandler"
         class="checkbox"
         v-for="item in $store.state[filterName]"
         :key="item.id"
@@ -19,6 +19,7 @@
 
 <script>
 import vClickOutside from 'click-outside-vue3'
+// import axios from 'axios'
 
 export default {
   data () {
@@ -35,7 +36,7 @@ export default {
   methods: {
     changeHandler () {
       this.$store.state.filters[this.filterName] = this.options
-      this.$emit('change-filters')
+      this.$emit('change-filters');
     },
     onClickOutside () {
       this.isOpen = false
