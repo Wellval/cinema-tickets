@@ -13,40 +13,47 @@
     <router-link :sessions="sessions" :to="{name: 'Movie', params: {movieId: id}}">
       <app-button>Tickets</app-button>
     </router-link>
-    <app-button @click="deleteMovie">Delete movie</app-button>
+    <app-button v-if="$store.state.admin" @click="deleteMovie">Delete movie</app-button>
   </div>
 </template>
 
 <script>
-import AppButton from './AppButton'
-import axios from 'axios'
+import AppButton from "./AppButton";
+import axios from "axios";
 
 export default {
-  props: ['url', 'title', 'plot', 'id'],
-  emits: ['movieDeleted'],
+  props: ["url", "title", "plot", "id"],
+  emits: ["movieDeleted"],
   computed: {
-    sessions () {
+    sessions() {
       return this.$store.state.sessions.filter(
         session => session.movieId === this.id
-      )
+      );
     }
   },
   methods: {
-    async deleteMovie () {
+    async deleteMovie() {
       await axios
         .delete(`http://localhost:5500/movie/${this.id}`)
         .then(response => {
-          this.$store.state.movies.splice(this.$store.state.movies.indexOf(this.$store.state.movies.find(movie => movie._id === this.id)), 1)
+          this.$store.state.moviesSearched.splice(
+            this.$store.state.moviesSearched.indexOf(
+              this.$store.state.moviesSearched.find(
+                movie => movie._id === this.id
+              )
+            ),
+            1
+          );
         })
         .catch(error => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     }
   },
   components: {
     AppButton
   }
-}
+};
 </script>
 
 <style lang="scss">

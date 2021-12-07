@@ -1,6 +1,5 @@
 <template>
-  <app-searchbar @input-changed="addFilters"></app-searchbar>
-  <app-prompt @choose-movie="chooseMovie" :moviesSearched="moviesSearched"></app-prompt>
+  <app-prompt @choose-movie="chooseMovie"></app-prompt>
   <div class="filters-container">
     <app-filter
       @change-filters="addFilters"
@@ -9,9 +8,10 @@
       :key="filterName"
     ></app-filter>
   </div>
+  <app-searchbar @input-changed="addFilters"></app-searchbar>
   <div class="movies-container">
     <app-movie-card
-      v-for="movie in moviesSearched"
+      v-for="movie in $store.state.moviesSearched"
       :url="movie.image_url"
       :title="movie.title"
       :id="movie._id"
@@ -19,78 +19,68 @@
       :key="movie.title + Math.random()"
     />
   </div>
-  <div v-if="moviesSearched.length === 0">No movies with this parameters</div>
+  <div v-if="$store.state.moviesSearched.length === 0">No movies with this parameters</div>
 </template>
 
 <script>
-import AppSearchbar from '../components/AppSearchbar'
-import AppMovieCard from '../components/AppMovieCard'
-import AppFilter from '../components/AppFilter'
-import AppPrompt from '../components/AppPrompt'
+import AppSearchbar from "../components/AppSearchbar";
+import AppMovieCard from "../components/AppMovieCard";
+import AppFilter from "../components/AppFilter";
+import AppPrompt from "../components/AppPrompt";
 
 const propsMappings = {
-  cinemas: 'cinemaId',
-  cities: 'cityId',
-  dates: 'dateId',
-  timeslots: 'timeslotId'
-}
+  cinemas: "cinemaId",
+  cities: "cityId",
+  dates: "dateId",
+  timeslots: "timeslotId"
+};
 
 export default {
-  async mounted () {
-    await this.$store.dispatch('getMovies')
-    await this.$store.dispatch('getSessions')
-    this.moviesFiltered = this.$store.state.movies
-    this.sessions = this.$store.state.sessions
+  async mounted() {
+    await this.$store.dispatch("getMovies");
+    await this.$store.dispatch("getSessions");
+    this.sessions = this.$store.state.sessions;
+    this.$store.state.moviesSearched = this.$store.state.allMovies;
   },
-  data () {
+  data() {
     return {
-      moviesFiltered: [],
-      sessions: []
-    }
-  },
-  computed: {
-    moviesSearched () {
-      return this.moviesFiltered.filter(movie =>
-        movie.title
-          .toLowerCase()
-          .toLowerCase()
-          .includes(this.$store.state.search.toLowerCase())
-      )
-    }
+      sessions: [],
+      searchFocused: false
+    };
   },
   methods: {
-    verifySession (session, filters) {
+    verifySession(session, filters) {
       for (const key of Object.keys(propsMappings)) {
         if (
           filters[key].length > 0 &&
           !filters[key].includes(session[propsMappings[key]])
         ) {
-          return false
+          return false;
         }
       }
-      return true
+      return true;
     },
-    addFilters () {
+    addFilters() {
       this.sessions = this.$store.state.sessions.filter(session =>
         this.verifySession(session, this.$store.state.filters)
-      )
+      );
       const movies = [
         ...new Set(this.sessions.map(session => session.movieTitle))
-      ]
+      ];
       if (
         Object.keys(propsMappings).some(
           x => this.$store.state.filters[x].length !== 0
         )
       ) {
-        this.moviesFiltered = this.$store.state.movies.filter(movie =>
+        this.moviesFiltered = this.$store.state.moviesSearched.filter(movie =>
           movies.includes(movie.title)
-        )
-      } else this.moviesFiltered = this.$store.state.movies
+        );
+      } else this.moviesFiltered = this.$store.state.moviesSearched;
     },
-    chooseMovie (movieId) {
-      this.moviesFiltered = this.moviesFiltered.filter(
-        m => m.title === movieId
-      )
+    chooseMovie(movieId) {
+      this.$store.state.moviesSearched = this.$store.state.moviesSearched.filter(
+        m => m._id === movieId
+      );
     }
   },
   components: {
@@ -99,7 +89,7 @@ export default {
     AppFilter,
     AppPrompt
   }
-}
+};
 </script>
 
 <style lang="scss">

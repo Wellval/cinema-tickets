@@ -19,7 +19,7 @@
               <p>{{ this.cinemas.find(cinema => cinema.id == session.cinemaId).name }}</p>
               <p>{{ this.cities.find(city => city.id == session.cityId).name }}</p>
             </div>
-            <app-button :sessions="sessions">Buy tickets</app-button>
+            <app-button @click="buyTicket" :sessions="sessions">Buy tickets</app-button>
           </div>
           <hr />
         </div>
@@ -73,6 +73,10 @@ export default {
     async asyncData () {
       const { data } = await axios.get(`http://localhost:5500/movie/${this.pageId}`)
       this.movie = data
+    },
+    async buyTicket() {
+      const { data } = await axios.get(`http://localhost:5500/movie/tickets`)
+      console.log(data)
     }
   },
   components: {

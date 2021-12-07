@@ -1,24 +1,24 @@
 <template>
   <div
     class="prompt-container"
-    v-if="moviesSearched.length !== 0
-      && moviesSearched.length !== 1
-      && moviesSearched.length !== $store.state.movies.length"
+    v-if="$store.state.moviesSearched.length !== $store.state.allMovies.length
+  && $store.state.moviesSearched.length > 2"
   >
     <div
       class="prompt"
       @click="$emit('choose-movie', movie._id)"
-      v-for="movie in moviesSearched"
+      v-for="movie in $store.state.moviesSearched"
       :key="movie.id"
     >{{ movie.title }}</div>
   </div>
 </template>
 
 <script>
+import vClickOutside from "click-outside-vue3";
+
 export default {
-  props: ['moviesSearched'],
-  emits: ['choose-movie']
-}
+  emits: ["choose-movie"]
+};
 </script>
 
 <style lang="scss">
@@ -29,7 +29,7 @@ export default {
   min-height: 50px;
   max-height: 200px;
   overflow-y: auto;
-  top: 58px;
+  top: 163px;
   background: white;
   z-index: 2;
   color: #1e1e1e;
@@ -46,6 +46,6 @@ export default {
 }
 
 .input-search:focus ~ .prompt {
-          color: yellowgreen;
-    }
+  color: yellowgreen;
+}
 </style>

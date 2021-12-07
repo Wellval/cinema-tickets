@@ -4,6 +4,7 @@
       <i class="fas fa-search"></i>
     </button>
     <input
+      @focus="$emit('focus-input')"
       @input="inputHandler"
       v-model="$store.state.search"
       type="text"
@@ -17,14 +18,18 @@
 import axios from "axios";
 
 export default {
-  emits: ["input-changed"],
+  emits: ["input-changed", "focus-input", "unfocus"],
   methods: {
     inputHandler() {
       this.$emit("input-changed");
-      const { data } = axios.get(
-        "http://localhost:5500/all/searched",
-        this.$store.state.search
-      );
+      const config = { headers: { "Content-Type": "application/json" } };
+      const movies = axios
+        .post(
+          "http://localhost:5500/movie/searched/list",
+          { input: this.$store.state.search },
+          config
+        )
+        .then(result => (this.$store.state.moviesSearched = result.data));
     }
   }
 };

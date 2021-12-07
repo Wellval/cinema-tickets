@@ -5,7 +5,8 @@ export default createStore({
   state () {
     return {
       users: [],
-      movies: [],
+      allMovies: [],
+      moviesSearched: [],
       sessions: [],
       cinemas: [],
       dates: [],
@@ -82,8 +83,8 @@ export default createStore({
     }
   },
   mutations: {
-    SET_MOVIES (state, movies) {
-      state.movies = movies
+    SET_MOVIES (state, allMovies) {
+      state.allMovies = allMovies
     },
     SET_SESSIONS (state, sessions) {
       state.sessions = sessions

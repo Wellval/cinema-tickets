@@ -21,15 +21,11 @@
 </template>
 
 <script>
-import vClickOutside from "click-outside-vue3";
 import AppButton from "./AppButton";
 import AppInput from "./AppInput";
 import axios from "axios";
 
 export default {
-  directives: {
-    clickOutside: vClickOutside.directive
-  },
   data() {
     return {
       userData: {
@@ -67,7 +63,7 @@ export default {
           this.loginMessage = "Logged in!";
           localStorage.token = result.data.accessToken;
           this.$store.state.token = localStorage.token;
-          if (result.data.role === "admin") {
+          if (result.data.role && result.data.role === "admin") {
             this.$store.state.admin = true;
           }
           this.loginSuccess = true;
