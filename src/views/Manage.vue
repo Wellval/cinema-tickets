@@ -4,18 +4,17 @@
       <ul>
         <li
           v-for="category in Object.keys(categories)"
-          :key="category + Math.random()"
+          :key="category"
           @click="selectedCategory = category"
         >Add {{category}}</li>
       </ul>
     </aside>
     <form @submit.prevent="submitHandler">
       <app-input
-        @changed="changed"
-        v-for="param in Object.keys(categories[selectedCategory])"
+        v-model="categories[selectedCategory][param]"
+        v-for="(param, index) in Object.keys(categories[selectedCategory])"
         v-if="selectedCategory !== 'session'"
-        :key="param + Math.random()"
-        :input="categories[selectedCategory].param"
+        :key="param + index"
         :placeholder="param.split('_').join(' ')"
       ></app-input>
       <select
@@ -60,16 +59,16 @@ export default {
       added: false
     };
   },
+  props: ["modelValue"],
   methods: {
-    changed(currentInput, placeholder) {
-      const key = Object.keys(this.categories[this.selectedCategory]).find(
-        key => key.split("_").join(" ") === placeholder
-      );
-      this.categories[this.selectedCategory][key] = currentInput;
-    },
     submitHandler() {
       axios.post(
         "http://localhost:5500/movie/all/add",
+        {
+          headers: {
+            "x-access-token": localStorage.getItem("token")
+          }
+        },
         this.categories[this.selectedCategory]
       );
       this.added = true;
@@ -80,15 +79,9 @@ export default {
   },
   computed: {
     valid() {
-      if (
-        Object.values(this.categories[this.selectedCategory]).every(
-          val => val !== ""
-        )
-      ) {
-        return false;
-      } else {
-        return true;
-      }
+      return !Object.values(this.categories[this.selectedCategory]).every(
+        val => val !== ""
+      );
     }
   },
   components: {

@@ -7,7 +7,7 @@
           <router-link to="/movies">Movies</router-link>
         </li>
         <li>
-          <router-link to="/manage" v-if="$store.state.admin">Manage</router-link>
+          <router-link to="/manage" v-if="admin === true">Manage</router-link>
         </li>
         <li @click="modalWindowOpen = true" v-if="token === ''">Log in</li>
         <li @click="logout" v-else>Log out</li>
@@ -29,6 +29,9 @@ export default {
   computed: {
     token() {
       return this.$store.state.token;
+    },
+    admin() {
+      return this.$store.state.admin
     }
   },
   methods: {
@@ -37,6 +40,7 @@ export default {
     },
     logout() {
       this.$store.state.token = "";
+      localStorage.admin = false;
       this.$store.state.admin = false;
       localStorage.token = "";
     }

@@ -10,8 +10,7 @@
         v-for="key in Object.keys(userData)"
         :key="key"
         :placeholder="key"
-        :input="userData[key]"
-        @changed="changed"
+        v-model="userData[key]"
       ></app-input>
       <app-button class="dark-button" v-if="!register">Log in</app-button>
       <p @click="register = true" v-if="!register">Register</p>
@@ -70,12 +69,12 @@ export default {
         })
         .catch(e => {
           this.loginMessage = e.response.data;
+          setTimeout(() => {
+            this.loginMessage = "";
+          }, 3000);
+          this.loginMessage = e.response.data;
           this.loginSuccess = false;
         });
-    },
-    changed(input, placeholder) {
-      const key = Object.keys(this.userData).find(key => key === placeholder);
-      this.userData[key] = input;
     },
     submitHandler() {
       if (this.register) {

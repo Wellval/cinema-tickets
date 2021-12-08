@@ -8,12 +8,12 @@ export default createStore({
       allMovies: [],
       moviesSearched: [],
       sessions: [],
+      admin: localStorage.getItem('admin'),
       cinemas: [],
       dates: [],
       timeslots: [],
       search: '',
       token: localStorage.getItem('token'),
-      admin: false,
       cities: [],
       halls: [],
       filters: {
@@ -83,6 +83,11 @@ export default createStore({
     }
   },
   mutations: {
+    setAdmin( state ) {
+      if (localStorage.getItem('admin')) {
+        state.admin = localStorage.getItem('admin');
+      }
+    },
     SET_MOVIES (state, allMovies) {
       state.allMovies = allMovies
     },

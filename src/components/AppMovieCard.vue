@@ -13,7 +13,7 @@
     <router-link :sessions="sessions" :to="{name: 'Movie', params: {movieId: id}}">
       <app-button>Tickets</app-button>
     </router-link>
-    <app-button v-if="$store.state.admin" @click="deleteMovie">Delete movie</app-button>
+    <app-button @click="deleteMovie" v-if="$store.state.admin">Delete movie</app-button>
   </div>
 </template>
 
@@ -34,7 +34,11 @@ export default {
   methods: {
     async deleteMovie() {
       await axios
-        .delete(`http://localhost:5500/movie/${this.id}`)
+        .delete(`http://localhost:5500/movie/${this.id}`, {
+          headers: {
+            "x-access-token": localStorage.getItem("token")
+          }
+        })
         .then(response => {
           this.$store.state.moviesSearched.splice(
             this.$store.state.moviesSearched.indexOf(
