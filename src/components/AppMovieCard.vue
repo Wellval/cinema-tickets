@@ -13,7 +13,7 @@
     <router-link :sessions="sessions" :to="{name: 'Movie', params: {movieId: id}}">
       <app-button>Tickets</app-button>
     </router-link>
-    <app-button @click="deleteMovie" v-if="$store.state.admin">Delete movie</app-button>
+    <app-button @click="deleteMovie" v-if="admin">Delete movie</app-button>
   </div>
 </template>
 
@@ -29,6 +29,9 @@ export default {
       return this.$store.state.sessions.filter(
         session => session.movieId === this.id
       );
+    },
+    admin() {
+      return this.$store.state.admin;
     }
   },
   methods: {

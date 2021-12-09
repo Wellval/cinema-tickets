@@ -63,13 +63,12 @@ export default {
   methods: {
     submitHandler() {
       axios.post(
-        "http://localhost:5500/movie/all/add",
+        "http://localhost:5500/movie/all/add", this.categories[this.selectedCategory],
         {
           headers: {
             "x-access-token": localStorage.getItem("token")
           }
-        },
-        this.categories[this.selectedCategory]
+        }
       );
       this.added = true;
       setTimeout(() => {

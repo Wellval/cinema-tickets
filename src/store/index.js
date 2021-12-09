@@ -1,14 +1,14 @@
 import { createStore } from 'vuex'
-import axios from 'axios'
+import getItems from '../shared/getFromApi';
 
 export default createStore({
-  state () {
+  state() {
     return {
       users: [],
       allMovies: [],
       moviesSearched: [],
       sessions: [],
-      admin: localStorage.getItem('admin'),
+      admin: JSON.parse(localStorage.getItem('admin')),
       cinemas: [],
       dates: [],
       timeslots: [],
@@ -25,91 +25,54 @@ export default createStore({
     }
   },
   actions: {
-    getMovies ({ commit }) {
-      return axios.get('http://localhost:5500/movie/all/list')
-        .then(response => response.data)
-        .then(items => {
-          commit('SET_MOVIES', items)
-        })
+    getMovies({ commit }) {
+      getItems(commit, 'http://localhost:5500/movie/all/list', 'SET_MOVIES');
     },
-    getSessions ({ commit }) {
-      return axios.get('https://tickets-9b42e-default-rtdb.firebaseio.com/sessions.json')
-        .then(response => response.data)
-        .then(items => {
-          commit('SET_SESSIONS', items)
-        })
+    getSessions({ commit }) {
+      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/sessions.json', 'SET_SESSIONS');
     },
-    getDates ({ commit }) {
-      return axios.get('https://tickets-9b42e-default-rtdb.firebaseio.com/dates.json')
-        .then(response => response.data)
-        .then(items => {
-          commit('SET_DATES', items)
-        })
+    getDates({ commit }) {
+      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/dates.json', 'SET_DATES');
     },
-    getCinemas ({ commit }) {
-      return axios.get('https://tickets-9b42e-default-rtdb.firebaseio.com/cinemas.json')
-        .then(response => response.data)
-        .then(items => {
-          commit('SET_CINEMAS', items)
-        })
+    getCinemas({ commit }) {
+      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/cinemas.json', 'SET_CINEMAS');
     },
-    getHalls ({ commit }) {
-      return axios.get('https://tickets-9b42e-default-rtdb.firebaseio.com/halls.json')
-        .then(response => response.data)
-        .then(items => {
-          commit('SET_HALLS', items)
-        })
+    getHalls({ commit }) {
+      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/HALLS.json', 'SET_HALLS');
     },
-    getTimeslots ({ commit }) {
-      return axios.get('https://tickets-9b42e-default-rtdb.firebaseio.com/timeslots.json')
-        .then(response => response.data)
-        .then(items => {
-          commit('SET_TIMESLOTS', items)
-        })
+    getTimeslots({ commit }) {
+      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/timeslots.json', 'SET_TIMESLOTS');
     },
-    getCities ({ commit }) {
-      return axios.get('https://tickets-9b42e-default-rtdb.firebaseio.com/cities.json')
-        .then(response => response.data)
-        .then(items => {
-          commit('SET_CITIES', items)
-        })
+    getCities({ commit }) {
+      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/cities.json', 'SET_CITIES');
     },
-    getUsers ({ commit }) {
-      return axios.get('https://tickets-users-default-rtdb.firebaseio.com/users.json')
-        .then(response => response.data)
-        .then(items => {
-          commit('SET_USERS', items)
-        })
+    getUsers({ commit }) {
+      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/users.json', 'SET_USERS');
     }
   },
   mutations: {
-    setAdmin( state ) {
-      if (localStorage.getItem('admin')) {
-        state.admin = localStorage.getItem('admin');
-      }
-    },
-    SET_MOVIES (state, allMovies) {
+    SET_MOVIES(state, allMovies) {
       state.allMovies = allMovies
     },
-    SET_SESSIONS (state, sessions) {
+    SET_SESSIONS(state, sessions) {
       state.sessions = sessions
     },
-    SET_DATES (state, dates) {
+    SET_DATES(state, dates) {
       state.dates = dates
     },
-    SET_CINEMAS (state, cinemas) {
+    SET_CINEMAS(state, cinemas) {
       state.cinemas = cinemas
     },
-    SET_HALLS (state, halls) {
+    SET_HALLS(state, halls) {
       state.halls = halls
     },
-    SET_TIMESLOTS (state, timeslots) {
+    SET_TIMESLOTS(state, timeslots) {
       state.timeslots = timeslots
     },
-    SET_CITIES (state, cities) {
+    SET_CITIES(state, cities) {
       state.cities = cities
     },
-    SET_USERS (state, users) {
+    SET_USERS(state, users) {
       state.users = users
     }
   }

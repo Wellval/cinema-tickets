@@ -64,6 +64,7 @@ export default {
           this.$store.state.token = localStorage.token;
           if (result.data.role && result.data.role === "admin") {
             this.$store.state.admin = true;
+            localStorage.admin = true;
           }
           this.loginSuccess = true;
         })
