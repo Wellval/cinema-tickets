@@ -19,7 +19,6 @@
 
 <script>
 import vClickOutside from 'click-outside-vue3'
-// import axios from 'axios'
 
 export default {
   data () {

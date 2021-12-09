@@ -69,8 +69,7 @@ export default {
             "x-access-token": localStorage.getItem("token")
           }
         }
-      );
-      this.added = true;
+      ).then(result => result ? this.added = true : this.added = false)
       setTimeout(() => {
         this.added = false;
       }, 2000);

@@ -5,12 +5,12 @@
     </div>
     <div class="title">{{ title }}</div>
     <p class="movie-card_plot">{{plot}}</p>
-    <div
+    <!-- <div
       class="timeslots"
       v-for="session in sessions"
       :key="session.timeslotId + Math.random()"
-    >{{ session.timeslotId }}</div>
-    <router-link :sessions="sessions" :to="{name: 'Movie', params: {movieId: id}}">
+    >{{ session.timeslotId }}</div> -->
+    <router-link :to="{name: 'Movie', params: {movieId: id}}">
       <app-button>Tickets</app-button>
     </router-link>
     <app-button @click="deleteMovie" v-if="admin">Delete movie</app-button>
@@ -25,11 +25,6 @@ export default {
   props: ["url", "title", "plot", "id"],
   emits: ["movieDeleted"],
   computed: {
-    sessions() {
-      return this.$store.state.sessions.filter(
-        session => session.movieId === this.id
-      );
-    },
     admin() {
       return this.$store.state.admin;
     }

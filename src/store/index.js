@@ -29,30 +29,31 @@ export default createStore({
       getItems(commit, 'http://localhost:5500/movie/all/list', 'SET_MOVIES');
     },
     getSessions({ commit }) {
-      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/sessions.json', 'SET_SESSIONS');
+      getItems(commit, 'http://localhost:5500/session/all/list', 'SET_SESSIONS');
     },
     getDates({ commit }) {
-      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/dates.json', 'SET_DATES');
+      getItems(commit, 'http://localhost:5500/date/all/list', 'SET_DATES');
     },
     getCinemas({ commit }) {
-      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/cinemas.json', 'SET_CINEMAS');
+      getItems(commit, 'http://localhost:5500/cinema/all/list', 'SET_CINEMAS');
     },
     getHalls({ commit }) {
-      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/HALLS.json', 'SET_HALLS');
+      getItems(commit, 'hhttp://localhost:5500/hall/all/list', 'SET_HALLS');
     },
     getTimeslots({ commit }) {
-      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/timeslots.json', 'SET_TIMESLOTS');
+      getItems(commit, 'http://localhost:5500/hall/all/list', 'SET_TIMESLOTS');
     },
     getCities({ commit }) {
-      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/cities.json', 'SET_CITIES');
+      getItems(commit, 'http://localhost:5500/city/all/list', 'SET_CITIES');
     },
     getUsers({ commit }) {
-      getItems(commit, 'https://tickets-9b42e-default-rtdb.firebaseio.com/users.json', 'SET_USERS');
+      getItems(commit, 'http://localhost:5500/city/all/list', 'SET_USERS');
     }
   },
   mutations: {
     SET_MOVIES(state, allMovies) {
       state.allMovies = allMovies
+      state.moviesSearched = allMovies
     },
     SET_SESSIONS(state, sessions) {
       state.sessions = sessions
