@@ -4,7 +4,6 @@
       <i class="fas fa-search"></i>
     </button>
     <input
-      @focus="$emit('focus-input')"
       @input="inputHandler"
       v-model="$store.state.search"
       type="text"

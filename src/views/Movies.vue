@@ -5,18 +5,17 @@
       @change-filters="addFilters"
       :filterName="filterName"
       v-for="filterName in Object.keys($store.state.filters)"
-      :key="filterName"
     ></app-filter>
   </div>
-  <app-searchbar @input-changed="addFilters"></app-searchbar>
-  <div class="movies-container">
+  <app-searchbar></app-searchbar>
+  <div class="movies-container" v-if="$store.state.moviesSearched.length !== 0">
     <app-movie-card
       v-for="movie in $store.state.moviesSearched"
       :url="movie.image_url"
       :title="movie.title"
       :id="movie._id"
       :plot="movie.plot"
-      :key="movie.title + Math.random()"
+      :key="movie._id"
     />
   </div>
   <div v-if="$store.state.moviesSearched.length === 0">No movies with this parameters</div>
@@ -27,12 +26,14 @@ import AppSearchbar from "../components/AppSearchbar";
 import AppMovieCard from "../components/AppMovieCard";
 import AppFilter from "../components/AppFilter";
 import AppPrompt from "../components/AppPrompt";
+import axios from "axios";
+import qs from "querystring";
 
 const propsMappings = {
-  cinemas: "cinemaId",
-  cities: "cityId",
-  dates: "dateId",
-  timeslots: "timeslotId"
+  cinema: "cinemaId",
+  city: "cityId",
+  date: "dateId",
+  timeslot: "timeslotId"
 };
 
 export default {
@@ -40,42 +41,33 @@ export default {
     await this.$store.dispatch("getMovies");
     await this.$store.dispatch("getSessions");
     this.sessions = this.$store.state.sessions;
-    this.$store.state.moviesSearched = this.$store.state.allMovies;
+    this.$store.state.moviesSearched = this.$store.state.movies;
+    console.log(this.$store.state.movies.length);
   },
   data() {
     return {
       sessions: [],
-      searchFocused: false
+      searchFocused: false,
+      movieId: []
     };
   },
   methods: {
-    verifySession(session, filters) {
-      for (const key of Object.keys(propsMappings)) {
-        if (
-          filters[key].length > 0 &&
-          !filters[key].includes(session[propsMappings[key]])
-        ) {
-          return false;
-        }
-      }
-      return true;
-    },
-    addFilters() {
-      this.sessions = this.$store.state.sessions.filter(session =>
-        this.verifySession(session, this.$store.state.filters)
-      );
-      const movies = [
-        ...new Set(this.sessions.map(session => session.movieTitle))
-      ];
-      if (
-        Object.keys(propsMappings).some(
-          x => this.$store.state.filters[x].length !== 0
+    async addFilters(filterName) {
+      this.movieId = [];
+      let movies = new Set();
+      await axios
+        .get(
+          `http://localhost:5500/session/all/list?${qs.stringify(
+            this.$store.state.filters
+          )}`
         )
-      ) {
-        this.moviesFiltered = this.$store.state.moviesSearched.filter(movie =>
-          movies.includes(movie.title)
-        );
-      } else this.moviesFiltered = this.$store.state.moviesSearched;
+        .then(result => {
+          result.data.map(res => this.movieId.push(res.movie));
+          this.movieId.map(movie => {
+            movies.add(this.$store.state.movies.find(m => m._id === movie));
+          });
+        });
+      this.$store.state.moviesSearched = Array.from(movies);
     },
     chooseMovie(movieId) {
       this.$store.state.moviesSearched = this.$store.state.moviesSearched.filter(

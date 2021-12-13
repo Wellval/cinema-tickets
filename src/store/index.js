@@ -5,7 +5,7 @@ export default createStore({
   state() {
     return {
       users: [],
-      allMovies: [],
+      movies: [],
       moviesSearched: [],
       sessions: [],
       admin: JSON.parse(localStorage.getItem('admin')),
@@ -38,10 +38,10 @@ export default createStore({
       getItems(commit, 'http://localhost:5500/cinema/all/list', 'SET_CINEMAS');
     },
     getHalls({ commit }) {
-      getItems(commit, 'hhttp://localhost:5500/hall/all/list', 'SET_HALLS');
+      getItems(commit, 'http://localhost:5500/hall/all/list', 'SET_HALLS');
     },
     getTimeslots({ commit }) {
-      getItems(commit, 'http://localhost:5500/hall/all/list', 'SET_TIMESLOTS');
+      getItems(commit, 'http://localhost:5500/timeslot/all/list', 'SET_TIMESLOTS');
     },
     getCities({ commit }) {
       getItems(commit, 'http://localhost:5500/city/all/list', 'SET_CITIES');
@@ -51,9 +51,9 @@ export default createStore({
     }
   },
   mutations: {
-    SET_MOVIES(state, allMovies) {
-      state.allMovies = allMovies
-      state.moviesSearched = allMovies
+    SET_MOVIES(state, movies) {
+      state.movies = movies
+      state.moviesSearched = movies
     },
     SET_SESSIONS(state, sessions) {
       state.sessions = sessions

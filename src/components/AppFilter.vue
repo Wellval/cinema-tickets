@@ -3,13 +3,11 @@
     <button class="filter" @click="isOpen = !isOpen">{{ filterName }}</button>
     <form v-if="isOpen">
       <div
-        @input="changeHandler"
-        class="checkbox"
         v-for="item in $store.state[filterName]"
-        :key="item.id"
+        class="checkbox"
       >
         <label>
-          <input v-model="options" type="checkbox" :value="item.id" name="options" />
+          <input :value="item._id" @change="changeHandler" type="checkbox" name="options" v-model="options" />
           {{item.name}}
         </label>
       </div>
@@ -18,36 +16,42 @@
 </template>
 
 <script>
-import vClickOutside from 'click-outside-vue3'
+import vClickOutside from "click-outside-vue3";
 
 export default {
-  data () {
+  data() {
     return {
+      filters: {
+        cinemas: this.$store.state.cinemas,
+        cities: 'cities',
+        dates: 'dates',
+        timeslots: 'timeslots'
+      },
       options: [],
       isOpen: false
-    }
+    };
   },
-  props: ['filterName'],
-  emits: ['change-filters'],
+  props: ["filterName"],
+  emits: ["change-filters"],
   directives: {
     clickOutside: vClickOutside.directive
   },
   methods: {
-    changeHandler () {
-      this.$store.state.filters[this.filterName] = this.options
-      this.$emit('change-filters');
+    async changeHandler() {
+      this.$store.state.filters[this.filterName] = this.options;
+      await this.$emit("change-filters", this.filterName);
     },
-    onClickOutside () {
-      this.isOpen = false
+    onClickOutside() {
+      this.isOpen = false;
     }
   },
-  mounted () {
-    this.$store.dispatch('getCities')
-    this.$store.dispatch('getCinemas')
-    this.$store.dispatch('getDates')
-    this.$store.dispatch('getTimeslots')
+  mounted() {
+    this.$store.dispatch("getCities");
+    this.$store.dispatch("getCinemas");
+    this.$store.dispatch("getDates");
+    this.$store.dispatch("getTimeslots");
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -71,6 +75,7 @@ export default {
     text-transform: uppercase;
     letter-spacing: 2px;
     cursor: pointer;
+    z-index: 1;
   }
 
   .form-checkbox {

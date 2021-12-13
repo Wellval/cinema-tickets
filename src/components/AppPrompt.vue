@@ -1,7 +1,7 @@
 <template>
   <div
     class="prompt-container"
-    v-if="$store.state.moviesSearched.length !== $store.state.allMovies.length
+    v-if="$store.state.moviesSearched.length !== $store.state.movies.length
   && $store.state.moviesSearched.length > 2"
   >
     <div
