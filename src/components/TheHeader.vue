@@ -14,7 +14,8 @@
       </ul>
     </div>
   </div>
-  <app-modal-window @close-modal="close" v-if="modalWindowOpen"></app-modal-window>
+  <p v-if="token !== ''">{{userEmail}}</p>
+  <app-modal-window @signin="signin" @close-modal="close" v-if="modalWindowOpen"></app-modal-window>
 </template>
 
 <script>
@@ -23,7 +24,8 @@ import AppModalWindow from "./AppModalWindow";
 export default {
   data() {
     return {
-      modalWindowOpen: false
+      modalWindowOpen: false,
+      userEmail: ""
     };
   },
   computed: {
@@ -31,7 +33,7 @@ export default {
       return this.$store.state.token;
     },
     admin() {
-      return this.$store.state.admin
+      return this.$store.state.admin;
     }
   },
   methods: {
@@ -43,6 +45,9 @@ export default {
       localStorage.admin = false;
       this.$store.state.admin = false;
       localStorage.token = "";
+    },
+    signin(email) {
+      this.userEmail = email;
     }
   },
   components: {

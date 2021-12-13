@@ -42,7 +42,6 @@ export default {
     await this.$store.dispatch("getSessions");
     this.sessions = this.$store.state.sessions;
     this.$store.state.moviesSearched = this.$store.state.movies;
-    console.log(this.$store.state.movies.length);
   },
   data() {
     return {

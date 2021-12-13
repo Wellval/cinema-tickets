@@ -23,6 +23,7 @@
 import AppButton from "./AppButton";
 import AppInput from "./AppInput";
 import axios from "axios";
+import { Vue } from "vue";
 
 export default {
   data() {
@@ -60,6 +61,7 @@ export default {
         .post("http://localhost:5500/auth/login", this.userData)
         .then(result => {
           this.loginMessage = "Logged in!";
+          this.$emit("signin", this.userData.email);
           localStorage.token = result.data.accessToken;
           this.$store.state.token = localStorage.token;
           if (result.data.role && result.data.role === "admin") {
@@ -83,7 +85,7 @@ export default {
       } else this.login();
     }
   },
-  emits: ["close-modal"],
+  emits: ["close-modal", "signin"],
   components: {
     AppButton,
     AppInput
