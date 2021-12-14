@@ -2,12 +2,15 @@
   <div class="filter-container" v-click-outside="onClickOutside">
     <button class="filter" @click="isOpen = !isOpen">{{ filterName }}</button>
     <form v-if="isOpen">
-      <div
-        v-for="item in $store.state[filterName]"
-        class="checkbox"
-      >
+      <div v-for="item in $store.state[filterName]" class="checkbox">
         <label>
-          <input :value="item._id" @change="changeHandler" type="checkbox" name="options" v-model="options" />
+          <input
+            :value="item._id"
+            @change="changeHandler"
+            type="checkbox"
+            name="options"
+            v-model="options"
+          />
           {{item.name}}
         </label>
       </div>
@@ -23,9 +26,9 @@ export default {
     return {
       filters: {
         cinemas: this.$store.state.cinemas,
-        cities: 'cities',
-        dates: 'dates',
-        timeslots: 'timeslots'
+        cities: "cities",
+        dates: "dates",
+        timeslots: "timeslots"
       },
       options: [],
       isOpen: false
@@ -37,9 +40,12 @@ export default {
     clickOutside: vClickOutside.directive
   },
   methods: {
-    async changeHandler() {
-      this.$store.state.filters[this.filterName] = this.options;
-      await this.$emit("change-filters", this.filterName);
+    changeHandler() {
+      this.$store.commit("SET_FILTERS", {
+        filterName: this.filterName,
+        value: this.options
+      });
+      this.$emit("change-filters", this.filterName);
     },
     onClickOutside() {
       this.isOpen = false;

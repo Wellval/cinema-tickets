@@ -14,7 +14,7 @@
       </ul>
     </div>
   </div>
-  <p v-if="token !== ''">{{$store.state.email}}</p>
+  <p>{{email}}</p>
   <app-modal-window @close-modal="close" v-if="modalWindowOpen"></app-modal-window>
 </template>
 
@@ -24,7 +24,7 @@ import AppModalWindow from "./AppModalWindow";
 export default {
   data() {
     return {
-      modalWindowOpen: false
+      modalWindowOpen: false,
     };
   },
   computed: {
@@ -33,6 +33,9 @@ export default {
     },
     admin() {
       return this.$store.state.admin;
+    },
+    email() {
+      return this.$store.state.email
     }
   },
   methods: {
@@ -40,10 +43,10 @@ export default {
       this.modalWindowOpen = false;
     },
     logout() {
-      this.$store.state.token = "";
-      this.$store.state.admin = "";
+      this.$store.commit("SET_TOKEN", "");
+      this.$store.commit("SET_ADMIN", "");
       localStorage.token = "";
-      this.$store.state.email = "";
+      this.$store.dispatch("setEmail", "");
     }
   },
   components: {

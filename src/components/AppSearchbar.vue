@@ -28,7 +28,7 @@ export default {
           { input: this.$store.state.search },
           config
         )
-        .then(result => (this.$store.state.moviesSearched = result.data));
+        .then(result => this.$store.commit("SET_MOVIES_SEARCHED", result.data));
     }
   }
 };

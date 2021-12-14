@@ -69,8 +69,9 @@ export default {
       this.$store.state.moviesSearched = Array.from(movies);
     },
     chooseMovie(movieId) {
-      this.$store.state.moviesSearched = this.$store.state.moviesSearched.filter(
-        m => m._id === movieId
+      this.$store.commit(
+        "SET_MOVIES_SEARCHED",
+        this.$store.state.moviesSearched.filter(m => m._id === movieId)
       );
     }
   },

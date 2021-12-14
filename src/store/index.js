@@ -28,8 +28,11 @@ export default createStore({
     init(store) {
       store.actions.setToken(store, JSON.parse(localStorage.getItem('token') || ''))
     },
-    setToken(store, value) {
-      store.commit('SET_TOKEN', value)
+    setEmail(store, value) {
+      store.commit('SET_EMAIL', value)
+    },
+    setAdmin(store, value) {
+      store.commit('SET_ADMIN', value)
     },
     getMovies({ commit }) {
       getItems(commit, 'http://localhost:5500/movie/all/list', 'SET_MOVIES');
@@ -54,11 +57,14 @@ export default createStore({
     },
     getUsers({ commit }) {
       getItems(commit, 'http://localhost:5500/city/all/list', 'SET_USERS');
-    }
+    },
   },
   mutations: {
     SET_MOVIES(state, movies) {
       state.movies = movies
+      state.moviesSearched = movies
+    },
+    SET_MOVIES_SEARCHED(state, movies) {
       state.moviesSearched = movies
     },
     SET_SESSIONS(state, sessions) {
@@ -83,9 +89,18 @@ export default createStore({
       state.users = users
     },
     SET_TOKEN(state, value) {
-      state.token = JSON.parse(value)
-      localStorage.setItem('token', JSON.stringify(token))
+      state.token = value;
+      // localStorage.setItem('token', token)
     },
+    SET_EMAIL(state, value) {
+      state.email = value
+    },
+    SET_ADMIN(state, value) {
+      state.admin = value
+    },
+    SET_FILTERS(state, payload) {
+      state.filters[payload.filterName] = payload.value;
+    }
   },
   getters: {
     token(state) {

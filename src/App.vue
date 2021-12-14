@@ -15,7 +15,7 @@ export default {
       return this.$route.meta.layout + "-layout";
     }
   },
-  mounted() {
+  updated() {
     axios
       .get("http://localhost:5500/user/me", {
         headers: {
@@ -23,8 +23,8 @@ export default {
         }
       })
       .then(result => {
-        this.$store.state.admin = result.data._doc.role;
-        this.$store.state.email = result.data._doc.email;
+        this.$store.dispatch('setAdmin', result.data._doc.role);
+        this.$store.dispatch('setEmail', result.data._doc.email);
       });
   },
   components: {
