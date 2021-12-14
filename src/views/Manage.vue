@@ -77,9 +77,6 @@ export default {
     };
   },
   props: ["modelValue"],
-  updated() {
-    console.log(this.movies);
-  },
   methods: {
     submitHandler() {
       axios

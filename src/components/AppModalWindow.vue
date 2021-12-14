@@ -61,13 +61,18 @@ export default {
         .post("http://localhost:5500/auth/login", this.userData)
         .then(result => {
           this.loginMessage = "Logged in!";
-          this.$emit("signin", this.userData.email);
           localStorage.token = result.data.accessToken;
           this.$store.state.token = localStorage.token;
-          if (result.data.role && result.data.role === "admin") {
-            this.$store.state.admin = true;
-            localStorage.admin = true;
-          }
+          axios
+            .get("http://localhost:5500/user/me", {
+              headers: {
+                "x-access-token": localStorage.getItem("token")
+              }
+            })
+            .then(result => {
+              this.$store.state.admin = result.data._doc.role;
+              this.$store.state.email = result.data._doc.email;
+            });
           this.loginSuccess = true;
         })
         .catch(e => {

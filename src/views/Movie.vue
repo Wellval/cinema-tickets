@@ -8,19 +8,16 @@
         <p>Rating: {{ movie.rating }}</p>
       </div>
     </div>
-    <div class="session-container" v-if="sessions.length > 0">
-      <div class="session" v-for="(session, index) in sessions" :key="session.city + Math.random()">
-        <div class="session-info">
-          <div>
-            <p>{{cinemas[index] ? cinemas[index].name : ''}}</p>
-            <p>{{cities[index] ? cities[index].name : ''}}</p>
-            <p>{{halls[index] ? halls[index].name : ''}}</p>
-            <p>{{dates[index] ? dates[index].name : ''}} {{timeslots[index] ? timeslots[index].name : ''}}</p>
-          </div>
-          <app-button @click="buyTicket" :sessions="sessions">Buy tickets</app-button>
-        </div>
-        <hr />
-      </div>
+    <div class="session-container" v-if="sessions">
+      <session-description
+        @deleteSession="getSessions"
+        v-for="(session, index) in sessions"
+        :key="session._id"
+        :index="index"
+        :movieId="movieId"
+        :sessions="sessions"
+        :session="session"
+      ></session-description>
     </div>
   </div>
 </template>
@@ -28,18 +25,14 @@
 <script>
 import AppButton from "../components/AppButton";
 import axios from "axios";
+import sessionDescription from "../components/sessionDescription";
 
 export default {
   props: ["movieId"],
   data() {
     return {
-      timeslots: [],
       sessions: [],
-      movie: "",
-      dates: [],
-      cinemas: [],
-      halls: [],
-      cities: []
+      movie: ""
     };
   },
   computed: {
@@ -47,35 +40,27 @@ export default {
       return this.$route.params.movieId;
     }
   },
-  async created() {
-    await axios
-      .get(`http://localhost:5500/session/${this.movieId}`)
-      .then(sessions => (this.sessions = sessions.data));
-    for (let session of this.sessions) {
-      await axios.get(`http://localhost:5500/cinema/${session.cinema}`).then(result => this.cinemas.push(result.data));
-      await axios.get(`http://localhost:5500/city/${session.city}`).then(result => this.cities.push(result.data));
-      await axios.get(`http://localhost:5500/hall/${session.hall}`).then(result => this.halls.push(result.data));
-      await axios.get(`http://localhost:5500/timeslot/${session.timeslot}`).then(result => this.timeslots.push(result.data));
-      await axios.get(`http://localhost:5500/date/${session.date}`).then(result => this.dates.push(result.data))
-    }
-  },
   mounted() {
     this.asyncData();
+    this.getSessions();
   },
 
   methods: {
+    async getSessions() {
+      await axios
+        .get(`http://localhost:5500/session/${this.movieId}`)
+        .then(sessions => (this.sessions = sessions.data));
+    },
     async asyncData() {
       const { data } = await axios.get(
         `http://localhost:5500/movie/${this.pageId}`
       );
       this.movie = data;
-    },
-    async buyTicket() {
-      const { data } = await axios.get(`http://localhost:5500/movie/tickets`);
     }
   },
   components: {
-    AppButton
+    AppButton,
+    sessionDescription
   }
 };
 </script>

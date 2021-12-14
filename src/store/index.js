@@ -4,11 +4,11 @@ import getItems from '../shared/getFromApi';
 export default createStore({
   state() {
     return {
-      users: [],
+      userEmail: "",
       movies: [],
       moviesSearched: [],
       sessions: [],
-      admin: JSON.parse(localStorage.getItem('admin')),
+      admin: false,
       cinemas: [],
       dates: [],
       timeslots: [],
@@ -25,6 +25,12 @@ export default createStore({
     }
   },
   actions: {
+    init(store) {
+      store.actions.setToken(store, JSON.parse(localStorage.getItem('token') || ''))
+    },
+    setToken(store, value) {
+      store.commit('SET_TOKEN', value)
+    },
     getMovies({ commit }) {
       getItems(commit, 'http://localhost:5500/movie/all/list', 'SET_MOVIES');
     },
@@ -75,6 +81,15 @@ export default createStore({
     },
     SET_USERS(state, users) {
       state.users = users
+    },
+    SET_TOKEN(state, value) {
+      state.token = JSON.parse(value)
+      localStorage.setItem('token', JSON.stringify(token))
+    },
+  },
+  getters: {
+    token(state) {
+      return state.token
     }
   }
 })

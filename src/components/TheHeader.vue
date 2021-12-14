@@ -7,15 +7,15 @@
           <router-link to="/movies">Movies</router-link>
         </li>
         <li>
-          <router-link to="/manage" v-if="admin === true">Manage</router-link>
+          <router-link to="/manage" v-if="$store.state.admin === 'admin'">Manage</router-link>
         </li>
         <li @click="modalWindowOpen = true" v-if="token === ''">Log in</li>
         <li @click="logout" v-else>Log out</li>
       </ul>
     </div>
   </div>
-  <p v-if="token !== ''">{{userEmail}}</p>
-  <app-modal-window @signin="signin" @close-modal="close" v-if="modalWindowOpen"></app-modal-window>
+  <p v-if="token !== ''">{{$store.state.email}}</p>
+  <app-modal-window @close-modal="close" v-if="modalWindowOpen"></app-modal-window>
 </template>
 
 <script>
@@ -24,8 +24,7 @@ import AppModalWindow from "./AppModalWindow";
 export default {
   data() {
     return {
-      modalWindowOpen: false,
-      userEmail: ""
+      modalWindowOpen: false
     };
   },
   computed: {
@@ -42,12 +41,9 @@ export default {
     },
     logout() {
       this.$store.state.token = "";
-      localStorage.admin = false;
-      this.$store.state.admin = false;
+      this.$store.state.admin = "";
       localStorage.token = "";
-    },
-    signin(email) {
-      this.userEmail = email;
+      this.$store.state.email = "";
     }
   },
   components: {
