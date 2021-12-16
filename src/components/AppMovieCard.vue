@@ -59,7 +59,6 @@ export default {
       let movieSessions = this.sessions.filter(
         session => session.movie === this.id
       );
-      console.log(movieSessions);
       movieSessions.map(movieSession => {
         axios
           .delete(`http://localhost:5500/session/${movieSession._id}`, {
