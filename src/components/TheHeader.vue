@@ -7,7 +7,7 @@
           <router-link to="/movies">Movies</router-link>
         </li>
         <li>
-          <router-link to="/manage" v-if="$store.state.admin === 'admin'">Manage</router-link>
+          <router-link to="/manage" v-if="$store.state.user.admin">Manage</router-link>
         </li>
         <li @click="modalWindowOpen = true" v-if="token === ''">Log in</li>
         <li @click="logout" v-else>Log out</li>
@@ -24,7 +24,7 @@ import AppModalWindow from "./AppModalWindow";
 export default {
   data() {
     return {
-      modalWindowOpen: false,
+      modalWindowOpen: false
     };
   },
   computed: {
@@ -32,10 +32,10 @@ export default {
       return this.$store.state.token;
     },
     admin() {
-      return this.$store.state.admin;
+      return this.$store.state.user.admin;
     },
     email() {
-      return this.$store.state.email
+      return this.$store.state.user.email;
     }
   },
   methods: {
@@ -44,9 +44,8 @@ export default {
     },
     logout() {
       this.$store.commit("SET_TOKEN", "");
-      this.$store.commit("SET_ADMIN", "");
+      this.$store.commit("SET_USER", { admin: false });
       localStorage.token = "";
-      this.$store.dispatch("setEmail", "");
     }
   },
   components: {

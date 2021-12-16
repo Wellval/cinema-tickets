@@ -16,16 +16,26 @@ export default {
     }
   },
   updated() {
-    axios
-      .get("http://localhost:5500/user/me", {
-        headers: {
-          "x-access-token": localStorage.getItem("token")
-        }
-      })
-      .then(result => {
-        this.$store.dispatch('setAdmin', result.data._doc.role);
-        this.$store.dispatch('setEmail', result.data._doc.email);
-      });
+    if (localStorage.getItem("token") !== "") {
+      // axios.post(
+      //   "http://localhost:5500/auth/token",
+      //   {
+      //     headers: {
+      //       "x-access-token": localStorage.getItem("token")
+      //     }
+      //   },
+      //   this.$store.state.user
+      // );
+      axios
+        .get("http://localhost:5500/user/me", {
+          headers: {
+            "x-access-token": localStorage.getItem("token")
+          }
+        })
+        .then(result => {
+          this.$store.dispatch("setUser", result.data._doc);
+        });
+    }
   },
   components: {
     TheHeader,

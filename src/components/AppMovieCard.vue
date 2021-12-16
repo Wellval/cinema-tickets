@@ -5,11 +5,6 @@
     </div>
     <div class="title">{{ title }}</div>
     <p class="movie-card_plot">{{plot}}</p>
-    <!-- <div
-      class="timeslots"
-      v-for="session in sessions"
-      :key="session.timeslotId + Math.random()"
-    >{{ session.timeslotId }}</div> -->
     <router-link :to="{name: 'Movie', params: {movieId: id}}">
       <app-button>Tickets</app-button>
     </router-link>
@@ -22,11 +17,16 @@ import AppButton from "./AppButton";
 import axios from "axios";
 
 export default {
+  data() {
+    return {
+      sessions: []
+    };
+  },
   props: ["url", "title", "plot", "id"],
   emits: ["movieDeleted"],
   computed: {
     admin() {
-      return this.$store.state.admin;
+      return this.$store.state.user.admin || false;
     }
   },
   methods: {
@@ -46,10 +46,29 @@ export default {
             ),
             1
           );
+          this.deleteMovieSessions();
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    async deleteMovieSessions() {
+      await axios
+        .get("http://localhost:5500/session/all/list")
+        .then(sessions => (this.sessions = sessions.data));
+      let movieSessions = this.sessions.filter(
+        session => session.movie === this.id
+      );
+      console.log(movieSessions);
+      movieSessions.map(movieSession => {
+        axios
+          .delete(`http://localhost:5500/session/${movieSession._id}`, {
+            headers: {
+              "x-access-token": localStorage.getItem("token")
+            }
+          })
+          .then(sessions => console.log(this.sessions));
+      });
     }
   },
   components: {

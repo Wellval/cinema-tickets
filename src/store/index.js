@@ -4,11 +4,10 @@ import getItems from '../shared/getFromApi';
 export default createStore({
   state() {
     return {
-      userEmail: "",
+      user: { admin: false },
       movies: [],
       moviesSearched: [],
       sessions: [],
-      admin: false,
       cinemas: [],
       dates: [],
       timeslots: [],
@@ -28,11 +27,8 @@ export default createStore({
     init(store) {
       store.actions.setToken(store, JSON.parse(localStorage.getItem('token') || ''))
     },
-    setEmail(store, value) {
-      store.commit('SET_EMAIL', value)
-    },
-    setAdmin(store, value) {
-      store.commit('SET_ADMIN', value)
+    setUser(store, value) {
+      store.commit('SET_USER', value)
     },
     getMovies({ commit }) {
       getItems(commit, 'http://localhost:5500/movie/all/list', 'SET_MOVIES');
@@ -54,9 +50,6 @@ export default createStore({
     },
     getCities({ commit }) {
       getItems(commit, 'http://localhost:5500/city/all/list', 'SET_CITIES');
-    },
-    getUsers({ commit }) {
-      getItems(commit, 'http://localhost:5500/city/all/list', 'SET_USERS');
     },
   },
   mutations: {
@@ -90,13 +83,9 @@ export default createStore({
     },
     SET_TOKEN(state, value) {
       state.token = value;
-      // localStorage.setItem('token', token)
     },
-    SET_EMAIL(state, value) {
-      state.email = value
-    },
-    SET_ADMIN(state, value) {
-      state.admin = value
+    SET_USER(state, value) {
+      state.user = value
     },
     SET_FILTERS(state, payload) {
       state.filters[payload.filterName] = payload.value;

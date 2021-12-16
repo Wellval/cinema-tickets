@@ -15,7 +15,6 @@
       <app-button class="dark-button" v-if="!register">Log in</app-button>
       <p @click="register = true" v-if="!register">Register</p>
       <app-button v-else class="dark-button">Register</app-button>
-      {{email}}
     </form>
   </div>
 </template>
@@ -41,8 +40,8 @@ export default {
     };
   },
   computed: {
-    email() { 
-      return this.$store.state.email 
+    email() {
+      return this.$store.state.email;
     }
   },
   methods: {
@@ -67,6 +66,7 @@ export default {
         .post("http://localhost:5500/auth/login", this.userData)
         .then(result => {
           this.loginMessage = "Logged in!";
+          this.$emit('close-modal');
           localStorage.token = result.data.accessToken;
           this.$store.commit("SET_TOKEN", result.data.accessToken);
           this.loginSuccess = true;
@@ -80,15 +80,15 @@ export default {
           this.loginSuccess = false;
         });
       await axios
-            .get("http://localhost:5500/user/me", {
-              headers: {
-                "x-access-token": localStorage.getItem("token")
-              }
-            })
-            .then(result => {
-              this.$store.dispatch("setEmail", result.data._doc.email);
-              this.$store.dispatch("setAdmin", result.data._doc.role);
-            });
+        .get("http://localhost:5500/user/me", {
+          headers: {
+            "x-access-token": localStorage.getItem("token")
+          }
+        })
+        .then(result => {
+          this.$store.dispatch("setUser", result.data._doc);
+          console.log(this.$store.state.user);
+        });
     },
     submitHandler() {
       if (this.register) {
@@ -96,7 +96,7 @@ export default {
       } else this.login();
     }
   },
-  emits: ["close-modal", "signin"],
+  emits: ["close-modal"],
   components: {
     AppButton,
     AppInput

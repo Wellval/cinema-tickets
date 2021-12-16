@@ -8,8 +8,10 @@
         <p>{{date[index] ? date[index].name : ''}} {{timeslot[index] ? timeslot[index].name : ''}}</p>
       </div>
       <div class="buttons-wrapper">
-        <app-button @click="buyTicket">Buy tickets</app-button>
-        <app-button v-if="this.$store.state.admin === 'admin'" @click="removeSession">Delete session</app-button>
+          <router-link :to="{name: 'Tickets', params: {movieId: movieId, sessionId: session._id}}">
+            <app-button>Buy tickets</app-button>
+          </router-link>
+        <app-button v-if="this.$store.state.user.admin" @click="removeSession">Delete session</app-button>
       </div>
     </div>
     <hr />
@@ -25,12 +27,11 @@ export default {
   data() {
     return {
       timeslot: [],
-      movie: "",
       date: [],
       cinema: [],
       hall: [],
       city: [],
-      params: ['city', 'cinema', 'hall', 'timeslot', 'date'],
+      params: ["city", "cinema", "hall", "timeslot", "date"]
     };
   },
   emits: ["deleteSession"],
@@ -41,17 +42,14 @@ export default {
   },
   async mounted() {
     for (let session of this.sessions) {
-        this.params.map(param => {
-            axios
-            .get(`http://localhost:5500/${param}/${session[param]}`)
-            .then(result => this[param].push(result.data));
-        })
+      this.params.map(param => {
+        axios
+          .get(`http://localhost:5500/${param}/${session[param]}`)
+          .then(result => this[param].push(result.data));
+      });
     }
   },
   methods: {
-    async buyTicket() {
-      const { data } = await axios.get(`http://localhost:5500/movie/tickets`);
-    },
     async removeSession() {
       await axios.delete(`http://localhost:5500/session/${this.session._id}`, {
         headers: {
@@ -68,8 +66,8 @@ export default {
 </script>
 
 <style lang="scss">
-    .buttons-wrapper {
-        display: flex;
-        flex-direction: column;
-    }
+.buttons-wrapper {
+  display: flex;
+  flex-direction: column;
+}
 </style>

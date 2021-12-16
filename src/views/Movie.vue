@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="session-container" v-if="sessions">
-      <session-description
+      <app-session-description
         @deleteSession="getSessions"
         v-for="(session, index) in sessions"
         :key="session._id"
@@ -17,7 +17,7 @@
         :movieId="movieId"
         :sessions="sessions"
         :session="session"
-      ></session-description>
+      ></app-session-description>
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@
 <script>
 import AppButton from "../components/AppButton";
 import axios from "axios";
-import sessionDescription from "../components/sessionDescription";
+import AppSessionDescription from "../components/AppSessionDescription";
 
 export default {
   props: ["movieId"],
@@ -60,7 +60,7 @@ export default {
   },
   components: {
     AppButton,
-    sessionDescription
+    AppSessionDescription
   }
 };
 </script>

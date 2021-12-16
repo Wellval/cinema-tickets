@@ -27,6 +27,15 @@ const routes = [
     },
     props: true,
     component: () => import('../views/Manage.vue')
+  },
+  {
+    path: '/tickets/:movieId/:sessionId',
+    name: 'Tickets',
+    meta: {
+      layout: 'main'
+    },
+    props: true,
+    component: () => import('../views/Tickets.vue')
   }
 ]
 
