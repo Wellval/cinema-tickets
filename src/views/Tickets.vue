@@ -11,21 +11,20 @@
       </div>
     </div>
   </div>
+  <app-button>Book</app-button>
 </template>
 
 <script>
 import AppRecliner from "../components/seats/AppRecliner";
 import AppLoveSeat from "../components/seats/AppLoveSeat";
 import AppSofa from "../components/seats/AppSofa";
+import AppButton from "../components/AppButton";
 
 export default {
   props: ["movieId", "sessionId"],
   async created() {
     await this.$store.dispatch("getSessions");
     await this.$store.dispatch("getSeats");
-  },
-  data() {
-    return {};
   },
   computed: {
     movie() {
@@ -62,7 +61,8 @@ export default {
   components: {
     AppRecliner,
     AppLoveSeat,
-    AppSofa
+    AppSofa,
+    AppButton
   }
 };
 </script>

@@ -10,7 +10,10 @@
       </ul>
     </aside>
     <app-movie-form v-if="selectedCategory === 'movie'" :category="categories[selectedCategory]"></app-movie-form>
-    <app-session-form v-else-if="selectedCategory === 'session'" :category="categories[selectedCategory]"></app-session-form>
+    <app-session-form
+      v-else-if="selectedCategory === 'session'"
+      :category="categories[selectedCategory]"
+    ></app-session-form>
     <app-hall-form v-else-if="selectedCategory === 'hall'" :category="categories[selectedCategory]"></app-hall-form>
   </div>
 </template>
@@ -75,7 +78,7 @@ export default {
 }
 
 aside {
-  width: 250px;
+  width: 330px;
 
   ul li {
     list-style: none;
