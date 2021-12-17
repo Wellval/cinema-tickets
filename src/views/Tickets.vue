@@ -1,22 +1,28 @@
 <template>
   <h2>{{movie ? movie.title : ''}}</h2>
   <p>{{hall ? hall.name : ''}}</p>
-  <div>
-      <component v-for="seat of seats" :is="`app-${seat.category}`"></component>
+  <div v-if="hall && seats">
+    <div class="seats-wrapper" v-for="(row, index) of hall.rows">
+      <div v-for="item of row">
+        <component
+          v-if="seats.find(seat => seat._id === item.seat._id)"
+          :is="`app-${item.seat.category}`"
+        ></component>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import AppRecliner from "../components/seats/AppRecliner";
-import AppLoveSeat from "../components/seats/AppLoveSeat"
-import AppSofa from "../components/seats/AppSofa"
+import AppLoveSeat from "../components/seats/AppLoveSeat";
+import AppSofa from "../components/seats/AppSofa";
 
 export default {
   props: ["movieId", "sessionId"],
   async created() {
-    await this.$store.dispatch("getMovies");
     await this.$store.dispatch("getSessions");
-    await this.$store.dispatch("getHalls");
+    await this.$store.dispatch("getSeats");
   },
   data() {
     return {};
@@ -43,15 +49,20 @@ export default {
       }
     },
     seats() {
-        if (this.hall) {
-            return this.hall.seats
-        }
+      if (this.hall) {
+        return this.$store.state.seats;
+      }
+    },
+    rows() {
+      if (this.hall) {
+        return this.hall.rows;
+      }
     }
   },
   components: {
-      AppRecliner,
-      AppLoveSeat,
-      AppSofa
+    AppRecliner,
+    AppLoveSeat,
+    AppSofa
   }
 };
 </script>
@@ -60,5 +71,11 @@ export default {
 .seat-icon {
   width: 30px;
   height: 30px;
+}
+
+.seats-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

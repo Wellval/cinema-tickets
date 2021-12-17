@@ -9,8 +9,9 @@
         >Add {{category}}</li>
       </ul>
     </aside>
-    <app-movie-form v-if="selectedCategory !== 'session'" :category="categories[selectedCategory]"></app-movie-form>
-    <app-session-form v-else :category="categories[selectedCategory]"></app-session-form>
+    <app-movie-form v-if="selectedCategory === 'movie'" :category="categories[selectedCategory]"></app-movie-form>
+    <app-session-form v-else-if="selectedCategory === 'session'" :category="categories[selectedCategory]"></app-session-form>
+    <app-hall-form v-else-if="selectedCategory === 'hall'" :category="categories[selectedCategory]"></app-hall-form>
   </div>
 </template>
 
@@ -19,17 +20,10 @@ import AppInput from "../components/AppInput";
 import AppButton from "../components/AppButton";
 import AppMovieForm from "../components/AppMovieForm";
 import AppSessionForm from "../components/AppSessionForm";
+import AppHallForm from "../components/AppHallForm";
 import axios from "axios";
 
 export default {
-  async mounted() {
-    await this.$store.dispatch("getMovies");
-    this.$store.dispatch("getHalls");
-    this.$store.dispatch("getCities");
-    this.$store.dispatch("getCinemas");
-    this.$store.dispatch("getDates");
-    this.$store.dispatch("getTimeslots");
-  },
   data() {
     return {
       categories: {
@@ -49,7 +43,10 @@ export default {
           timeslots: "10:00",
           dates: "2021-12-25"
         },
-        hall: {}
+        hall: {
+          name: "",
+          rows: []
+        }
       },
       selectedCategory: "movie",
       added: false
@@ -60,7 +57,8 @@ export default {
     AppInput,
     AppButton,
     AppMovieForm,
-    AppSessionForm
+    AppSessionForm,
+    AppHallForm
   }
 };
 </script>

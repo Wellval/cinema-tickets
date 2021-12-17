@@ -38,8 +38,6 @@ const propsMappings = {
 
 export default {
   async mounted() {
-    await this.$store.dispatch("getMovies");
-    await this.$store.dispatch("getSessions");
     this.sessions = this.$store.state.sessions;
     this.$store.state.moviesSearched = this.$store.state.movies;
   },

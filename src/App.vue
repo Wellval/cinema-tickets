@@ -8,6 +8,7 @@
 import MainLayout from "./layouts/MainLayout";
 import TheHeader from "./components/TheHeader";
 import axios from "axios";
+import { refreshToken } from './shared/getFromApi';
 
 export default {
   computed: {
@@ -15,17 +16,17 @@ export default {
       return this.$route.meta.layout + "-layout";
     }
   },
+  async mounted() {
+    refreshToken();
+    await this.$store.dispatch("getMovies");
+    await this.$store.dispatch("getHalls");
+    this.$store.dispatch("getCities");
+    this.$store.dispatch("getCinemas");
+    this.$store.dispatch("getDates");
+    this.$store.dispatch("getTimeslots");
+  },
   updated() {
-    if (localStorage.getItem("token") !== "") {
-      // axios.post(
-      //   "http://localhost:5500/auth/token",
-      //   {
-      //     headers: {
-      //       "x-access-token": localStorage.getItem("token")
-      //     }
-      //   },
-      //   this.$store.state.user
-      // );
+    if (localStorage.getItem("token")) {
       axios
         .get("http://localhost:5500/user/me", {
           headers: {
@@ -33,7 +34,7 @@ export default {
           }
         })
         .then(result => {
-          this.$store.dispatch("setUser", result.data._doc);
+          this.$store.dispatch("setUser", result.data);
         });
     }
   },

@@ -1,6 +1,12 @@
 <template>
-  <button class="buy-tickets-btn" ><slot /></button>
+  <button class="buy-tickets-btn" :type="type"><slot /></button>
 </template>
+
+<script>
+export default {
+  props: ["type"]
+}
+</script>
 
 <style lang="scss">
 .buy-tickets-btn {

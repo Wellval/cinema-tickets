@@ -5,6 +5,7 @@ export default createStore({
   state() {
     return {
       user: { admin: false },
+      seats: [],
       movies: [],
       moviesSearched: [],
       sessions: [],
@@ -12,9 +13,9 @@ export default createStore({
       dates: [],
       timeslots: [],
       search: '',
-      token: localStorage.getItem('token'),
       cities: [],
       halls: [],
+      token: localStorage.getItem("token"),
       filters: {
         cinemas: [],
         cities: [],
@@ -24,11 +25,11 @@ export default createStore({
     }
   },
   actions: {
-    init(store) {
-      store.actions.setToken(store, JSON.parse(localStorage.getItem('token') || ''))
-    },
     setUser(store, value) {
       store.commit('SET_USER', value)
+    },
+    getSeats({ commit }) {
+      getItems(commit, 'http://localhost:5500/seat/all/list', 'SET_SEATS');
     },
     getMovies({ commit }) {
       getItems(commit, 'http://localhost:5500/movie/all/list', 'SET_MOVIES');
@@ -57,6 +58,12 @@ export default createStore({
       state.movies = movies
       state.moviesSearched = movies
     },
+    SET_SEATS(state, seats) {
+      state.seats = seats
+    },
+    SET_TOKEN(state, token) {
+      state.token = token
+    },
     SET_MOVIES_SEARCHED(state, movies) {
       state.moviesSearched = movies
     },
@@ -80,9 +87,6 @@ export default createStore({
     },
     SET_USERS(state, users) {
       state.users = users
-    },
-    SET_TOKEN(state, value) {
-      state.token = value;
     },
     SET_USER(state, value) {
       state.user = value

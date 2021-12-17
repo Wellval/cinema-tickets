@@ -50,12 +50,6 @@ export default {
     onClickOutside() {
       this.isOpen = false;
     }
-  },
-  mounted() {
-    this.$store.dispatch("getCities");
-    this.$store.dispatch("getCinemas");
-    this.$store.dispatch("getDates");
-    this.$store.dispatch("getTimeslots");
   }
 };
 </script>
