@@ -66,7 +66,7 @@ export default {
         .post("http://localhost:5500/auth/login", this.userData)
         .then(result => {
           this.loginMessage = "Logged in!";
-          this.$emit('close-modal');
+          this.$emit("close-modal");
           localStorage.token = result.data.accessToken;
           this.$store.commit("SET_TOKEN", result.data.accessToken);
           this.loginSuccess = true;
@@ -86,8 +86,7 @@ export default {
           }
         })
         .then(result => {
-          this.$store.dispatch("setUser", result.data._doc);
-          console.log(this.$store.state.user);
+          this.$store.dispatch("setUser", result.data);
         });
     },
     submitHandler() {

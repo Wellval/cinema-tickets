@@ -26,8 +26,8 @@
           </label>
           <div class="seats">
             <component
-              @click="row.splice(item, 1)"
-              v-for="item in row"
+              @click="row.splice(i, 1)"
+              v-for="(item, i) in row"
               :is="`app-${item.seat.category}`"
             ></component>
           </div>
@@ -70,6 +70,9 @@ export default {
         return true;
       }
       return false;
+    },
+    sessions() {
+      return this.$store.state.sessions;
     }
   },
   methods: {
@@ -83,12 +86,32 @@ export default {
         });
       }
     },
-    submitHandler() {
-      console.log(this.currentHall.rows);
-      axios.put(`http://localhost:5500/hall/${this.currentHall._id}`, {
-        name: this.currentHall.name,
-        rows: this.currentHall.rows
-      });
+    async submitHandler() {
+      let sessionChosen = this.$store.state.sessions.filter(
+        session => session.hall === this.currentHall._id
+      );
+      await axios
+        .put(
+          `http://localhost:5500/hall/${this.currentHall._id}`,
+          this.currentHall
+        )
+        .then(res => {
+          this.sessions.map(session => {
+            axios
+              .put(
+                `http://localhost:5500/session/${session._id}`,
+                {
+                  hallRows: this.currentHall.rows
+                },
+                {
+                  headers: {
+                    "x-access-token": localStorage.getItem("token")
+                  }
+                }
+              )
+              .then(result => console.log(789));
+          });
+        });
     }
   },
   components: {

@@ -40,7 +40,6 @@ import AppSofa from "./seats/AppSofa";
 import AppHallFormEdit from "./AppHallFormEdit";
 
 export default {
-  props: ["disabled"],
   async mounted() {
     await this.$store.dispatch("getSeats");
   },

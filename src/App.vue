@@ -20,10 +20,11 @@ export default {
     refreshToken();
     await this.$store.dispatch("getMovies");
     await this.$store.dispatch("getHalls");
-    this.$store.dispatch("getCities");
-    this.$store.dispatch("getCinemas");
-    this.$store.dispatch("getDates");
-    this.$store.dispatch("getTimeslots");
+    await this.$store.dispatch("getCities");
+    await this.$store.dispatch("getSessions");
+    await this.$store.dispatch("getCinemas");
+    await this.$store.dispatch("getDates");
+    await this.$store.dispatch("getTimeslots");
   },
   updated() {
     if (localStorage.getItem("token")) {

@@ -9,12 +9,13 @@
         >Add {{category}}</li>
       </ul>
     </aside>
-    <app-movie-form v-if="selectedCategory === 'movie'" :category="categories[selectedCategory]"></app-movie-form>
+    <app-movie-form v-if="selectedCategory === 'movie'" :valid="valid" :category="categories[selectedCategory]"></app-movie-form>
     <app-session-form
       v-else-if="selectedCategory === 'session'"
       :category="categories[selectedCategory]"
     ></app-session-form>
     <app-hall-form v-else-if="selectedCategory === 'hall'" :category="categories[selectedCategory]"></app-hall-form>
+    <app-form v-else :selectedCategory="selectedCategory" :valid="valid" :category="categories[selectedCategory]"></app-form>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ import AppButton from "../components/AppButton";
 import AppMovieForm from "../components/AppMovieForm";
 import AppSessionForm from "../components/AppSessionForm";
 import AppHallForm from "../components/AppHallForm";
+import AppForm from "../components/AppForm";
 import axios from "axios";
 
 export default {
@@ -49,11 +51,28 @@ export default {
         hall: {
           name: "",
           rows: []
+        },
+        timeslot: {
+          name: '',
+        },
+        date: {
+          name: '',
+        },
+        city: {
+          name: ''
+        },
+        cinema: {
+          name: ''
         }
       },
       selectedCategory: "movie",
       added: false
     };
+  },
+  computed: {
+    valid() {
+      return !Object.values(this.categories[this.selectedCategory]).every(val => val !== "");
+    }
   },
   props: ["modelValue"],
   components: {
@@ -61,7 +80,8 @@ export default {
     AppButton,
     AppMovieForm,
     AppSessionForm,
-    AppHallForm
+    AppHallForm,
+    AppForm,
   }
 };
 </script>
@@ -84,6 +104,11 @@ aside {
     list-style: none;
     letter-spacing: 1px;
     margin-top: 3px;
+    border: 2px white solid;
+    max-width: 170px;
+    height: 30px;
+    text-align: center;
+    text-justify:auto;
   }
 }
 </style>

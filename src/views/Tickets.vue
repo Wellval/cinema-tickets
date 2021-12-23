@@ -1,17 +1,7 @@
 <template>
   <h2>{{movie ? movie.title : ''}}</h2>
-  <p>{{hall ? hall.name : ''}}</p>
-  <div v-if="hall && seats">
-    <div class="seats-wrapper" v-for="(row, index) of hall.rows">
-      <div v-for="item of row">
-        <component
-          v-if="seats.find(seat => seat._id === item.seat._id)"
-          :is="`app-${item.seat.category}`"
-        ></component>
-      </div>
-    </div>
-  </div>
-  <app-button>Book</app-button>
+  <the-booking v-if="hall && seats && !payment" :hall="hall" :session="session" :seats="seats"></the-booking>
+  <div v-else></div>
 </template>
 
 <script>
@@ -19,12 +9,43 @@ import AppRecliner from "../components/seats/AppRecliner";
 import AppLoveSeat from "../components/seats/AppLoveSeat";
 import AppSofa from "../components/seats/AppSofa";
 import AppButton from "../components/AppButton";
+import TheBooking from "../components/TheBooking";
+import VCreditCard from "v-credit-card";
+import axios from "axios";
 
 export default {
   props: ["movieId", "sessionId"],
+  data() {
+    return {
+      tickets: [],
+      payment: false,
+      card: ""
+    };
+  },
   async created() {
     await this.$store.dispatch("getSessions");
     await this.$store.dispatch("getSeats");
+  },
+  methods: {
+    async bookSeat() {
+      await axios
+        .put(
+          `http://localhost:5500/session/${this.session._id}/book`,
+          {
+            hallRows: this.session.hallRows
+          },
+          {
+            headers: {
+              "x-access-token": localStorage.getItem("token")
+            }
+          }
+        )
+        .then(res => {
+          axios
+            .get(`http://localhost:5500/session/${this.session._id}`)
+            .then(res => console.log(res));
+        });
+    }
   },
   computed: {
     movie() {
@@ -62,7 +83,9 @@ export default {
     AppRecliner,
     AppLoveSeat,
     AppSofa,
-    AppButton
+    AppButton,
+    TheBooking,
+    VCreditCard
   }
 };
 </script>
@@ -71,6 +94,16 @@ export default {
 .seat-icon {
   width: 30px;
   height: 30px;
+}
+
+.seat-name {
+  width: 130px;
+  display: flex;
+  justify-content: space-between;
+
+  i {
+    cursor: pointer;
+  }
 }
 
 .seats-wrapper {

@@ -49,6 +49,7 @@ export default {
       const timeslot = this.$store.state.timeslots.find(
         timeslot => timeslot.name === this.category.timeslots
       );
+      console.log(hall.rows)
       axios
         .post(
           "http://localhost:5500/session/all/add",
@@ -56,6 +57,7 @@ export default {
             movie: movie._id,
             cinema: cinema._id,
             hall: hall._id,
+            hallRows: hall.rows,
             city: city._id,
             date: date._id,
             timeslot: timeslot._id

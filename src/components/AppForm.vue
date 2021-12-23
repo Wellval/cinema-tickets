@@ -4,7 +4,7 @@
       v-model="category[param]"
       v-for="(param, index) in Object.keys(category)"
       :key="param + index"
-      :placeholder="param.split('_').join(' ')"
+      :placeholder="selectedCategory"
     ></app-input>
     <app-button :disabled="valid">Add</app-button>
     <div v-if="added">Added successfully!</div>
@@ -17,7 +17,7 @@ import AppButton from "../components/AppButton";
 import axios from "axios";
 
 export default {
-  props: ["category", "valid"],
+  props: ["category", "valid", "selectedCategory"],
   data() {
     return {
       added: false
@@ -26,11 +26,15 @@ export default {
   methods: {
     submitHandler() {
       axios
-        .post("http://localhost:5500/movie/all/add", this.category, {
-          headers: {
-            "x-access-token": localStorage.getItem("token")
+        .post(
+          `http://localhost:5500/${this.selectedCategory}/all/add`,
+          this.category,
+          {
+            headers: {
+              "x-access-token": localStorage.getItem("token")
+            }
           }
-        })
+        )
         .then(result => {
           result ? (this.added = true) : (this.added = false);
         });
