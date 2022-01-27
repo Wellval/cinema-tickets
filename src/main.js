@@ -10,7 +10,7 @@ import io from 'socket.io-client';
 
 createApp(App).use(new VueSocketIO({
     debug: true,
-    connection: io('http://localhost:5500'),
+    connection: io('https://cinema-tickets-back.herokuapp.com/'),
     vuex: {
         store,
         actionPrefix: 'SOCKET_',

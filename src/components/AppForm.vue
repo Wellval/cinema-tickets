@@ -27,7 +27,7 @@ export default {
     submitHandler() {
       axios
         .post(
-          `http://localhost:5500/${this.selectedCategory}/all/add`,
+          `https://cinema-tickets-back.herokuapp.com/${this.selectedCategory}/all/add`,
           this.category,
           {
             headers: {
