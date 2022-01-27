@@ -1,0 +1,89 @@
+.forms {
+    width: 100%;
+}
+
+[type="radio"] {
+    visibility: hidden;
+  }
+  
+  .seats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .cross {
+    cursor: pointer;
+  }
+  
+  .add-forms-container .hall-form {
+    width: 100%;
+  
+    input {
+      width: 350px;
+    }
+  
+    label {
+      width: 50px;
+      margin-right: 10px;
+      svg {
+        width: 50px;
+      }
+    }
+  
+    .row-label {
+      width: 20px;
+    }
+  }
+  
+  .radio-wrapper {
+    display: flex;
+  }
+  
+  .rows-wrapper {
+    display: flex;
+    flex-direction: column;
+  
+    label:hover {
+      cursor: pointer;
+    }
+  
+    [type="radio"]:checked + span {
+      color: #ff4545;
+    }
+  
+    .row {
+      height: 100%;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  
+  svg:hover {
+    cursor: pointer;
+  }
+  
+  [type="radio"]:checked + svg g svg path {
+    fill: #ff4545;
+  }
+
+  .hall-names {
+    display: flex;
+    flex-wrap: wrap;
+
+    div {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+  }
+
+  .toBook svg g svg path {
+    fill: #ff4545;
+  }
+
+  .booked svg g svg path {
+    fill: grey;
+  }
