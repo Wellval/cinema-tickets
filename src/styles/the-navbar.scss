@@ -37,3 +37,23 @@
         }
     }
 }
+
+@media (max-width: 600px) {
+    .navbar-container {
+        flex-direction: column;
+
+        ul {
+            flex-direction: column;
+            padding: 0;
+
+            li {
+                padding: 0;
+                text-align: center;
+
+                a {
+                    padding: 0;
+                }
+            }
+        }
+    }
+}

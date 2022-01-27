@@ -1,10 +1,10 @@
 <template>
-  <button class="buy-tickets-btn" :type="type"><slot /></button>
+  <button :class=" buttonStyle || 'buy-tickets-btn'" :type="type"><slot /></button>
 </template>
 
 <script>
 export default {
-  props: ["type"]
+  props: ["type", "buttonStyle"]
 }
 </script>
 
@@ -43,6 +43,16 @@ export default {
 .dark-button {
   color: rgb(30, 30, 30);
   border: rgb(30, 30, 30) 2px solid;
+  border-radius: 30px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  height: 35px;
+  width: 150px;
+  margin-top: 20px;
 
   &:hover {
     color: gray;

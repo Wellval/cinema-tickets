@@ -9,9 +9,9 @@
       </div>
       <div class="buttons-wrapper">
           <router-link :to="{name: 'Tickets', params: {movieId: movieId, sessionId: session._id}}">
-            <app-button>Buy tickets</app-button>
+            <app-button :disabled="disabled">Buy tickets</app-button>
           </router-link>
-        <app-button v-if="this.$store.state.user.admin" @click="removeSession">Delete session</app-button>
+        <app-button v-if="$store.state.user.admin" @click="removeSession">Delete session</app-button>
       </div>
     </div>
     <hr />
@@ -47,6 +47,14 @@ export default {
           .get(`http://localhost:5500/${param}/${session[param]}`)
           .then(result => this[param].push(result.data));
       });
+    }
+  },
+  computed: {
+    disabled() {
+      if (JSON.stringify(this.$store.state.user) === JSON.stringify({})) {
+        return true
+      }
+      return false
     }
   },
   methods: {

@@ -40,6 +40,7 @@ export default {
   async mounted() {
     this.sessions = this.$store.state.sessions;
     this.$store.state.moviesSearched = this.$store.state.movies;
+    await this.$store.dispatch("getMovies");
   },
   data() {
     return {

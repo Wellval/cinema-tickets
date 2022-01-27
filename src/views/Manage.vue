@@ -89,6 +89,20 @@ export default {
 <style lang="scss">
 .add-forms-container {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  ul {
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+    li {
+      width: 100%;
+    }
+  }
 
   form {
     display: flex;
@@ -109,6 +123,12 @@ aside {
     height: 30px;
     text-align: center;
     text-justify:auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .add-forms-container .hall-form input {
+    width: 100%;
   }
 }
 </style>

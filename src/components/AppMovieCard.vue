@@ -66,7 +66,6 @@ export default {
               "x-access-token": localStorage.getItem("token")
             }
           })
-          .then(sessions => console.log(this.sessions));
       });
     }
   },

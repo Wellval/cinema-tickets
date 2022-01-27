@@ -49,8 +49,8 @@ export default {
       this.$emit("close-modal");
       this.register = false;
     },
-    registerUser() {
-      axios
+    async registerUser() {
+      await axios
         .post("http://localhost:5500/auth/registration", this.userData)
         .then(() => {
           this.registrationMessage = "Registered!";
@@ -60,6 +60,9 @@ export default {
           this.registrationMessage = e.response.data;
           this.registrationSuccess = false;
         });
+      await axios.post('http://localhost:5500/stripe/customer', {
+        email: this.userData.email
+      })
     },
     async login() {
       await axios

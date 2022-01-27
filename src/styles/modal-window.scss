@@ -69,3 +69,21 @@
   .app-input.redOutline {
     border: #ff4545 2px solid;
   }
+
+@media (max-width: 800px) {
+  .modal-window-container {
+    width: 70%;
+  }
+}
+
+@media (max-width: 550px) {
+  .modal-window-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 400px) {
+  .modal-window-container {
+    width: 100%;
+  }
+}

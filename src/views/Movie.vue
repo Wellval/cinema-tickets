@@ -94,4 +94,14 @@ h2 {
   width: 270px;
   height: 370px;
 }
+
+@media (max-width: 600px) {
+  .movie-sessions-container {
+    flex-direction: column;
+
+    .info-container {
+      margin: 0;
+    }
+  }
+}
 </style>

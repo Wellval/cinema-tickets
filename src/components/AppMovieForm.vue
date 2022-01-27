@@ -24,7 +24,7 @@ export default {
     };
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       axios
         .post("http://localhost:5500/movie/all/add", this.category, {
           headers: {

@@ -10,7 +10,6 @@ import AppLoveSeat from "../components/seats/AppLoveSeat";
 import AppSofa from "../components/seats/AppSofa";
 import AppButton from "../components/AppButton";
 import TheBooking from "../components/TheBooking";
-import VCreditCard from "v-credit-card";
 import axios from "axios";
 
 export default {
@@ -25,27 +24,6 @@ export default {
   async created() {
     await this.$store.dispatch("getSessions");
     await this.$store.dispatch("getSeats");
-  },
-  methods: {
-    async bookSeat() {
-      await axios
-        .put(
-          `http://localhost:5500/session/${this.session._id}/book`,
-          {
-            hallRows: this.session.hallRows
-          },
-          {
-            headers: {
-              "x-access-token": localStorage.getItem("token")
-            }
-          }
-        )
-        .then(res => {
-          axios
-            .get(`http://localhost:5500/session/${this.session._id}`)
-            .then(res => console.log(res));
-        });
-    }
   },
   computed: {
     movie() {
@@ -85,7 +63,6 @@ export default {
     AppSofa,
     AppButton,
     TheBooking,
-    VCreditCard
   }
 };
 </script>
@@ -110,5 +87,36 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  div {
+    max-width: 10%;
+
+    svg {
+      width: 60px;
+      height: 30px;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .seats-wrapper {
+
+  div {
+    svg {
+      width: 40px;
+    }
+  }
+}
+}
+
+@media (max-width: 460px) {
+  .seats-wrapper {
+
+  div {
+    svg {
+      width: 30px;
+    }
+  }
+}
 }
 </style>

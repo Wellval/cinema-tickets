@@ -82,11 +82,12 @@ export default {
     addSeat() {
       if (this.rows[this.currentRow - 1].length <= 10) {
         this.rows[this.currentRow - 1].push({
-          status: "available",
-          seat: this.$store.state.seats.find(
-            seat => seat.category === this.seat
-          )
-        });
+            status: "available",
+            seat: this.$store.state.seats.find(
+              seat => seat.category === this.seat
+            )
+          }
+        );
       }
     }
   },

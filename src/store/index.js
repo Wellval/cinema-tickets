@@ -4,7 +4,7 @@ import getItems from '../shared/getFromApi';
 export default createStore({
   state() {
     return {
-      user: { admin: false },
+      user: {},
       seats: [],
       movies: [],
       moviesSearched: [],

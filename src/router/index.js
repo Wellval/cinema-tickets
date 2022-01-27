@@ -36,7 +36,7 @@ const routes = [
     },
     props: true,
     component: () => import('../views/Tickets.vue')
-  }
+  },
 ]
 
 const router = createRouter({

@@ -46,7 +46,7 @@ export default {
     },
     logout() {
       this.$store.commit("SET_TOKEN", "");
-      this.$store.commit("SET_USER", { admin: false });
+      this.$store.commit("SET_USER", {});
       localStorage.token = "";
     }
   },
