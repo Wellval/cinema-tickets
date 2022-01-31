@@ -33,6 +33,7 @@
     "vue-3-socket.io": "^1.0.4",
     "vue-ccard": "^1.0.6",
     "vue-credit-card": "^0.0.11",
+    "vue-multi-select": "^4.6.0",
     "vue-on-click-outside": "^1.0.3",
     "vue-paycard": "^0.7.0",
     "vue-router": "^4.0.0-0",

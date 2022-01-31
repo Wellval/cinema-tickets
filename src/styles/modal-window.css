@@ -1,0 +1,110 @@
+.layout {
+  width: 100vw;
+  height: 100vh;
+  background-color: #1e1e1e;
+  opacity: 0.5;
+  top: 0;
+  right: 0;
+  position: fixed;
+  overflow: hidden;
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.modal-window-container {
+  width: 40%;
+  height: 350px;
+  background: white;
+  color: #1e1e1e;
+  letter-spacing: 2px;
+  font-size: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 4;
+  position: absolute;
+  opacity: 1;
+  z-index: 11;
+  position: fixed;
+  top: 20%;
+}
+
+.modal-window-container .error-message {
+  color: #ff4545;
+  font-size: 12px;
+  margin: 0;
+}
+
+.modal-window-container .success-message {
+  color: green;
+  font-size: 12px;
+  margin: 0;
+}
+
+.modal-window-container small {
+  font-size: 10px;
+}
+
+.modal-window-container .login-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 50%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.modal-window-container .login-form .dark-button {
+  margin-top: 30px;
+}
+
+.app-input, select {
+  height: 30px;
+  margin-top: 20px;
+  padding-left: 10px;
+  outline: none;
+  width: 100%;
+}
+
+.app-input.redOutline {
+  border: #ff4545 2px solid;
+}
+
+@media (max-width: 800px) {
+  .modal-window-container {
+    width: 70%;
+  }
+}
+
+@media (max-width: 550px) {
+  .modal-window-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 400px) {
+  .modal-window-container {
+    width: 100%;
+  }
+}
+/*# sourceMappingURL=modal-window.css.map */

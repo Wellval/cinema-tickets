@@ -18,6 +18,10 @@
       <hr />
     </div>
     <div v-if="totalPrice > 0">Total: {{totalPrice}}$</div>
+    <div>
+    <input type="checkbox" id="jack" value="Jack" v-model="checkedNames" />
+    <label for="jack">Coca-cola</label>
+  </div>
     <app-button :disabled="tickets.length < 1" @click="createCheckout">Buy</app-button>
   </div>
 </template>
@@ -29,7 +33,7 @@ import AppSofa from "./seats/AppSofa";
 import AppButton from "./AppButton";
 import axios from "axios";
 import io from "socket.io-client";
-const socket = io("https://cinema-tickets-back.herokuapp.com");
+const socket = io("http://localhost:5500");
 import VueSocketIO from "vue-3-socket.io";
 
 export default {
@@ -37,7 +41,6 @@ export default {
     return {
       tickets: [],
       dataSession: this.session,
-      display: "jnbjhb",
       minutesLeft: 0,
       secondsLeft: 0
     };
@@ -159,7 +162,7 @@ export default {
         movie: this.session.movie
       };
       await axios
-        .post("https://cinema-tickets-back.herokuapp.com/stripe/add-checkout-session", params, {
+        .post("http://localhost:5500/stripe/add-checkout-session", params, {
           headers: {
             "x-access-token": localStorage.getItem("token")
           }
@@ -177,7 +180,7 @@ export default {
     bookSeat() {
       axios
         .put(
-          `https://cinema-tickets-back.herokuapp.com/session/${this.session._id}/book`,
+          `http://localhost:5500/session/${this.session._id}/book`,
           {
             hallRows: this.session.hallRows,
             id: this.session._id
@@ -209,7 +212,8 @@ export default {
       let seats = {
         recliners: 0,
         loveseats: 0,
-        sofas: 0
+        sofas: 0,
+        cocacola: 0
       };
       if (this.tickets.length > 0) {
         this.tickets.map(a => {
@@ -227,7 +231,7 @@ export default {
     AppRecliner,
     AppLoveSeat,
     AppSofa,
-    AppButton
+    AppButton,
   }
 };
 </script>

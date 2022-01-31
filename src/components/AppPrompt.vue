@@ -29,7 +29,7 @@ export default {
   min-height: 50px;
   max-height: 200px;
   overflow-y: auto;
-  top: 163px;
+  top: 123px;
   background: white;
   z-index: 2;
   color: #1e1e1e;
@@ -47,5 +47,17 @@ export default {
 
 .input-search:focus ~ .prompt {
   color: yellowgreen;
+}
+
+@media (max-width: 1038px) {
+  .prompt-container {
+    top: 160px;
+  }
+}
+
+@media (max-width: 512px) {
+  .prompt-container {
+    top: 241px;
+  }
 }
 </style>

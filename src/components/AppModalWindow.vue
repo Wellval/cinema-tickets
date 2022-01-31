@@ -51,7 +51,7 @@ export default {
     },
     async registerUser() {
       await axios
-        .post("https://cinema-tickets-back.herokuapp.com/auth/registration", this.userData)
+        .post("http://localhost:5500/auth/registration", this.userData)
         .then(() => {
           this.registrationMessage = "Registered!";
           this.registrationSuccess = true;
@@ -60,13 +60,13 @@ export default {
           this.registrationMessage = e.response.data;
           this.registrationSuccess = false;
         });
-      await axios.post('https://cinema-tickets-back.herokuapp.com/stripe/customer', {
+      await axios.post('http://localhost:5500/stripe/customer', {
         email: this.userData.email
       })
     },
     async login() {
       await axios
-        .post("https://cinema-tickets-back.herokuapp.com/auth/login", this.userData)
+        .post("http://localhost:5500/auth/login", this.userData)
         .then(result => {
           this.loginMessage = "Logged in!";
           this.$emit("close-modal");
@@ -83,7 +83,7 @@ export default {
           this.loginSuccess = false;
         });
       await axios
-        .get("https://cinema-tickets-back.herokuapp.com/user/me", {
+        .get("http://localhost:5500/user/me", {
           headers: {
             "x-access-token": localStorage.getItem("token")
           }
