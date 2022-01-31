@@ -23,6 +23,7 @@
     "express": "^4.17.2",
     "immer": "^9.0.7",
     "md5": "^2.3.0",
+    "serve-static": "^1.14.2",
     "socket.io-client": "^4.4.0",
     "stripe": "^8.195.0",
     "v-credit-card": "^1.2.4",
