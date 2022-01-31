@@ -29,6 +29,14 @@ export default {
     };
   },
   props: ["category"],
+  async mounted() {
+    await this.$store.dispatch("getMovies");
+    await this.$store.dispatch("getCinemas");
+    await this.$store.dispatch("getCities");
+    await this.$store.dispatch("getHalls");
+    await this.$store.dispatch("getTimeslots");
+    await this.$store.dispatch("getDates");
+  },
   methods: {
     addSession() {
       const movie = this.$store.state.movies.find(
@@ -49,7 +57,6 @@ export default {
       const timeslot = this.$store.state.timeslots.find(
         timeslot => timeslot.name === this.category.timeslots
       );
-      console.log(hall.rows)
       axios
         .post(
           "https://cinema-tickets-back.herokuapp.com/session/all/add",
