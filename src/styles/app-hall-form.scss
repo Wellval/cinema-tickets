@@ -1,7 +1,3 @@
-.forms {
-    width: 100%;
-}
-
 [type="radio"] {
     visibility: hidden;
   }
@@ -17,9 +13,7 @@
     cursor: pointer;
   }
   
-  .add-forms-container .hall-form {
-    width: 100%;
-  
+  .add-forms-container .hall-form {  
     input {
       width: 350px;
     }
