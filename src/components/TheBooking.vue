@@ -88,12 +88,14 @@ export default {
           sec--;
           if(this.tickets.length === 0) {
             clearInterval(i);
+            this.time = '0:0'
           }
         } else if (sec == 0 && min > 0) {
           sec = 59;
           min--;
           if(this.tickets.length === 0) {
             clearInterval(i);
+            this.time = '0:0'
           }
         } else if (sec == 0 && min == 0) {
           this.secondsLeft = "";
