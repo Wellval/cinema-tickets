@@ -29,7 +29,7 @@ import AppSofa from "./seats/AppSofa";
 import AppButton from "./AppButton";
 import axios from "axios";
 import io from "socket.io-client";
-const socket = io("http://localhost:5500");
+const socket = io("https://cinema-tickets-back.herokuapp.com");
 import VueSocketIO from "vue-3-socket.io";
 
 export default {
