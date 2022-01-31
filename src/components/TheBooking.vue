@@ -84,7 +84,7 @@ export default {
   methods: {
     countdown(min, sec) {
       let i = setInterval(() => {
-        else if (sec > 0) {
+        if (sec > 0) {
           sec--;
         } else if (sec == 0 && min > 0) {
           sec = 59;
