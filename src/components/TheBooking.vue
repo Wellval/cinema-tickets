@@ -62,6 +62,12 @@ export default {
     this.$socket.emit("subscribe", this.session);
     for (let row of this.dataSession.hallRows) {
       for (let seat of row) {
+        if (
+            seat.status === "toBook" &&
+            seat.userId !== this.$store.state.user._id
+          ) {
+            seat.status = "booked";
+          }
         if (seat.status !== "booked") {
           seat.status = "available";
           this.$socket.emit("reserve", {
