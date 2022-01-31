@@ -139,6 +139,10 @@ export default {
         item.status = "available";
         item.userId = "";
         this.tickets.splice(this.tickets.indexOf(item), 1);
+        if (this.tickets.length === 0) {
+          this.secondsLeft = '';
+          this.minutesLeft = '';
+        }
       } else if (item.status === "available") {
         item.userId = this.$store.state.user._id;
         item.status = "toBook";
