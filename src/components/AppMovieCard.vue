@@ -32,7 +32,7 @@ export default {
   methods: {
     async deleteMovie() {
       await axios
-        .delete(`http://localhost:5500/movie/${this.id}`, {
+        .delete(`https://cinema-tickets-back.herokuapp.com/movie/${this.id}`, {
           headers: {
             "x-access-token": localStorage.getItem("token")
           }
@@ -54,14 +54,14 @@ export default {
     },
     async deleteMovieSessions() {
       await axios
-        .get("http://localhost:5500/session/all/list")
+        .get("https://cinema-tickets-back.herokuapp.com/session/all/list")
         .then(sessions => (this.sessions = sessions.data));
       let movieSessions = this.sessions.filter(
         session => session.movie === this.id
       );
       movieSessions.map(movieSession => {
         axios
-          .delete(`http://localhost:5500/session/${movieSession._id}`, {
+          .delete(`https://cinema-tickets-back.herokuapp.com/session/${movieSession._id}`, {
             headers: {
               "x-access-token": localStorage.getItem("token")
             }

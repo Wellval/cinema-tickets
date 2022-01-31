@@ -26,7 +26,7 @@ export default {
   methods: {
     async submitHandler() {
       axios
-        .post("http://localhost:5500/movie/all/add", this.category, {
+        .post("https://cinema-tickets-back.herokuapp.com/movie/all/add", this.category, {
           headers: {
             "x-access-token": localStorage.getItem("token")
           }
