@@ -62,6 +62,9 @@ export default {
   form {
     z-index: 2;
     position: relative;
+    max-height: 80px;
+    height: 80px;
+    overflow: scroll;
   }
 
   .filter {
