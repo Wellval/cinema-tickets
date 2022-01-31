@@ -191,10 +191,11 @@
   margin-bottom: 30px;
   -webkit-transition: .7s;
   transition: .7s;
+  justify-content: space-between;
 }
 
 .movie-card_wrapper a {
-  margin-top: auto;
+  margin-top: 0;
 }
 
 .movie-card_wrapper:hover {
@@ -230,6 +231,7 @@
 
 .movie-card_wrapper .poster img {
   width: 220px;
+  height: 320px;
   margin-bottom: 20px;
   -o-object-fit: fill;
      object-fit: fill;
