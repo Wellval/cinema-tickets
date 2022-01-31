@@ -64,7 +64,7 @@ export default {
   methods: {
     submitHandler() {
       axios
-        .post("http://localhost:5500/hall/add", {
+        .post("https://cinema-tickets-back.herokuapp.com/hall/add", {
           name: this.name,
           rows: this.rows
         })
