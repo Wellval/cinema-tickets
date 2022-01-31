@@ -44,7 +44,7 @@ export default {
     for (let session of this.sessions) {
       this.params.map(param => {
         axios
-          .get(`https://cinema-tickets-back.herokuapp.com/${param}/${session[param]}`)
+          .get(`http://localhost:5500/${param}/${session[param]}`)
           .then(result => this[param].push(result.data));
       });
     }
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     async removeSession() {
-      await axios.delete(`https://cinema-tickets-back.herokuapp.com/session/${this.session._id}`, {
+      await axios.delete(`http://localhost:5500/session/${this.session._id}`, {
         headers: {
           "x-access-token": localStorage.getItem("token")
         }

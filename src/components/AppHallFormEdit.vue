@@ -92,14 +92,14 @@ export default {
       );
       await axios
         .put(
-          `https://cinema-tickets-back.herokuapp.com/hall/${this.currentHall._id}`,
+          `http://localhost:5500/hall/${this.currentHall._id}`,
           this.currentHall
         )
         .then(res => {
           this.sessions.map(session => {
             axios
               .put(
-                `https://cinema-tickets-back.herokuapp.com/session/${session._id}`,
+                `http://localhost:5500/session/${session._id}`,
                 {
                   hallRows: this.currentHall.rows
                 },

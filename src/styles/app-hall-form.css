@@ -1,0 +1,105 @@
+[type="radio"] {
+  visibility: hidden;
+}
+
+.seats {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+.cross {
+  cursor: pointer;
+}
+
+.add-forms-container .hall-form input {
+  width: 350px;
+}
+
+.add-forms-container .hall-form label {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.add-forms-container .hall-form label svg {
+  width: 50px;
+}
+
+.add-forms-container .hall-form .row-label {
+  width: 20px;
+}
+
+.radio-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.rows-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.rows-wrapper label:hover {
+  cursor: pointer;
+}
+
+.rows-wrapper [type="radio"]:checked + span {
+  color: #ff4545;
+}
+
+.rows-wrapper .row {
+  height: 100%;
+  margin-top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+svg:hover {
+  cursor: pointer;
+}
+
+[type="radio"]:checked + svg g svg path {
+  fill: #ff4545;
+}
+
+.hall-names {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.hall-names div {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.toBook svg g svg path {
+  fill: #ff4545;
+}
+
+.booked svg g svg path {
+  fill: grey;
+}
+/*# sourceMappingURL=app-hall-form.css.map */

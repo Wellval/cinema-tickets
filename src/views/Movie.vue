@@ -48,12 +48,12 @@ export default {
   methods: {
     async getSessions() {
       await axios
-        .get(`https://cinema-tickets-back.herokuapp.com/session/${this.movieId}`)
+        .get(`http://localhost:5500/session/${this.movieId}`)
         .then(sessions => (this.sessions = sessions.data));
     },
     async asyncData() {
       const { data } = await axios.get(
-        `https://cinema-tickets-back.herokuapp.com/movie/${this.pageId}`
+        `http://localhost:5500/movie/${this.pageId}`
       );
       this.movie = data;
     }
