@@ -84,9 +84,6 @@ export default {
   methods: {
     countdown(min, sec) {
       let i = setInterval(() => {
-        if (this.tickets.length === 0) {
-          clearInterval(i);
-        }
         else if (sec > 0) {
           sec--;
         } else if (sec == 0 && min > 0) {
