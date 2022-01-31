@@ -122,6 +122,9 @@ export default {
     },
     async add(id) {
       let item = undefined;
+      if (this.tickets.length === 0) {
+          this.countdown(15, 0);
+        }
 
       for (let row of this.session.hallRows) {
         for (let obj of row) {
@@ -140,9 +143,6 @@ export default {
         item.userId = this.$store.state.user._id;
         item.status = "toBook";
         this.tickets.push(item);
-        if (this.tickets.length < 1) {
-          this.countdown(15, 0);
-        }
       }
       this.$socket.emit("reserve", {
         session: this.session,
