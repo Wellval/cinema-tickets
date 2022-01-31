@@ -86,9 +86,15 @@ export default {
       let i = setInterval(() => {
         if (sec > 0) {
           sec--;
+          if(this.tickets.length === 0) {
+            clearInterval(i);
+          }
         } else if (sec == 0 && min > 0) {
           sec = 59;
           min--;
+          if(this.tickets.length === 0) {
+            clearInterval(i);
+          }
         } else if (sec == 0 && min == 0) {
           this.secondsLeft = "";
           this.minutesLeft = "";
