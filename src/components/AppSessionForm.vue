@@ -59,7 +59,7 @@ export default {
       );
       axios
         .post(
-          "http://localhost:5500/session/all/add",
+          "https://cinema-tickets-back.herokuapp.com/session/all/add",
           {
             movie: movie._id,
             cinema: cinema._id,

@@ -24,7 +24,7 @@ export default {
       const config = { headers: { "Content-Type": "application/json" } };
       const movies = axios
         .post(
-          "http://localhost:5500/movie/searched/list",
+          "https://cinema-tickets-back.herokuapp.com/movie/searched/list",
           { input: this.$store.state.search },
           config
         )
