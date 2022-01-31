@@ -18,10 +18,6 @@
       <hr />
     </div>
     <div v-if="totalPrice > 0">Total: {{totalPrice}}$</div>
-    <div>
-    <input type="checkbox" id="jack" value="Jack" v-model="checkedNames" />
-    <label for="jack">Coca-cola</label>
-  </div>
     <app-button :disabled="tickets.length < 1" @click="createCheckout">Buy</app-button>
   </div>
 </template>
