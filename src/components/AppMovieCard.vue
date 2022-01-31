@@ -1,9 +1,13 @@
 <template>
   <div class="movie-card_wrapper">
+    <router-link :to="{name: 'Movie', params: {movieId: id}}">
     <div class="poster">
       <img :src="url" />
     </div>
+    </router-link>
+    <router-link :to="{name: 'Movie', params: {movieId: id}}">
     <div class="title">{{ title }}</div>
+    </router-link>
     <p class="movie-card_plot">{{plot}}</p>
     <router-link :to="{name: 'Movie', params: {movieId: id}}">
       <app-button>Tickets</app-button>
