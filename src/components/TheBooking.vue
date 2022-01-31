@@ -84,7 +84,10 @@ export default {
   methods: {
     countdown(min, sec) {
       let i = setInterval(() => {
-        if (sec > 0) {
+        if (this.tickets.length === 0) {
+          clearInterval(i);
+        }
+        else if (sec > 0) {
           sec--;
         } else if (sec == 0 && min > 0) {
           sec = 59;
@@ -140,7 +143,7 @@ export default {
         item.userId = this.$store.state.user._id;
         item.status = "toBook";
         this.tickets.push(item);
-        if (this.tickets.length <= 1) {
+        if (this.tickets.length < 1) {
           this.countdown(15, 0);
         }
       }
@@ -193,7 +196,6 @@ export default {
               val.status === "toBook" ? (val.status = "booked") : ""
             )
           );
-          console.log(res.data);
         });
     }
   },
@@ -213,7 +215,6 @@ export default {
       };
       if (this.tickets.length > 0) {
         this.tickets.map(a => {
-          console.log(a.seat.category.split("-"));
           seats[a.seat.category.split("-").join("") + "s"]++;
         });
       }
