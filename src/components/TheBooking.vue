@@ -100,8 +100,7 @@ export default {
             return;
           }
         } else if (sec == 0 && min == 0) {
-          this.secondsLeft = "";
-          this.minutesLeft = "";
+          // this.time = '0:0';
           clearInterval(i);
           this.tickets = []
           for (let row of this.dataSession.hallRows) {
@@ -150,8 +149,8 @@ export default {
         item.userId = "";
         this.tickets.splice(this.tickets.indexOf(item), 1);
         if (this.tickets.length === 0) {
-          this.secondsLeft = '';
-          this.minutesLeft = '';
+          this.secondsLeft = '0';
+          this.minutesLeft = '0';
         }
       } else if (item.status === "available") {
         item.userId = this.$store.state.user._id;
