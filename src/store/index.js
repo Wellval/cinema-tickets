@@ -29,28 +29,28 @@ export default createStore({
       store.commit('SET_USER', value)
     },
     getSeats({ commit }) {
-      getItems(commit, 'https://cinema-tickets-back.herokuapp.com/seat/all/list', 'SET_SEATS');
+      getItems(commit, 'http://localhost:5500/seat/all/list', 'SET_SEATS');
     },
     getMovies({ commit }) {
-      getItems(commit, 'https://cinema-tickets-back.herokuapp.com/movie/all/list', 'SET_MOVIES');
+      getItems(commit, 'http://localhost:5500/movie/all/list', 'SET_MOVIES');
     },
     getSessions({ commit }) {
-      getItems(commit, 'https://cinema-tickets-back.herokuapp.com/session/all/list', 'SET_SESSIONS');
+      getItems(commit, 'http://localhost:5500/session/all/list', 'SET_SESSIONS');
     },
     getDates({ commit }) {
-      getItems(commit, 'https://cinema-tickets-back.herokuapp.com/date/all/list', 'SET_DATES');
+      getItems(commit, 'http://localhost:5500/date/all/list', 'SET_DATES');
     },
     getCinemas({ commit }) {
-      getItems(commit, 'https://cinema-tickets-back.herokuapp.com/cinema/all/list', 'SET_CINEMAS');
+      getItems(commit, 'http://localhost:5500/cinema/all/list', 'SET_CINEMAS');
     },
     getHalls({ commit }) {
-      getItems(commit, 'https://cinema-tickets-back.herokuapp.com/hall/all/list', 'SET_HALLS');
+      getItems(commit, 'http://localhost:5500/hall/all/list', 'SET_HALLS');
     },
     getTimeslots({ commit }) {
-      getItems(commit, 'https://cinema-tickets-back.herokuapp.com/timeslot/all/list', 'SET_TIMESLOTS');
+      getItems(commit, 'http://localhost:5500/timeslot/all/list', 'SET_TIMESLOTS');
     },
     getCities({ commit }) {
-      getItems(commit, 'https://cinema-tickets-back.herokuapp.com/city/all/list', 'SET_CITIES');
+      getItems(commit, 'http://localhost:5500/city/all/list', 'SET_CITIES');
     },
   },
   mutations: {

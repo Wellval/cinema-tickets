@@ -29,7 +29,7 @@ export default {
   updated() {
     if (localStorage.getItem("token")) {
       axios
-        .get("https://cinema-tickets-back.herokuapp.com/user/me", {
+        .get("http://localhost:5500/user/me", {
           headers: {
             "x-access-token": localStorage.getItem("token")
           }

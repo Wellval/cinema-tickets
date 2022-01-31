@@ -29,7 +29,7 @@ import AppSofa from "./seats/AppSofa";
 import AppButton from "./AppButton";
 import axios from "axios";
 import io from "socket.io-client";
-const socket = io("https://cinema-tickets-back.herokuapp.com");
+const socket = io("http://localhost:5500");
 import VueSocketIO from "vue-3-socket.io";
 
 export default {
@@ -63,9 +63,7 @@ export default {
     for (let row of this.dataSession.hallRows) {
       for (let seat of row) {
         if (seat.status !== "booked") {
-          console.log(seat.status)
           seat.status = "available";
-          console.log(seat.status)
           this.$socket.emit("reserve", {
             session: this.dataSession,
             userId: seat.userId
@@ -155,7 +153,7 @@ export default {
         movie: this.session.movie
       };
       await axios
-        .post("https://cinema-tickets-back.herokuapp.com/stripe/add-checkout-session", params, {
+        .post("http://localhost:5500/stripe/add-checkout-session", params, {
           headers: {
             "x-access-token": localStorage.getItem("token")
           }
@@ -173,7 +171,7 @@ export default {
     bookSeat() {
       axios
         .put(
-          `https://cinema-tickets-back.herokuapp.com/session/${this.session._id}/book`,
+          `http://localhost:5500/session/${this.session._id}/book`,
           {
             hallRows: this.session.hallRows,
             id: this.session._id

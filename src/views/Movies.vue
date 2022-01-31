@@ -55,7 +55,7 @@ export default {
       let movies = new Set();
       await axios
         .get(
-          `https://cinema-tickets-back.herokuapp.com/session/all/list?${qs.stringify(
+          `http://localhost:5500/session/all/list?${qs.stringify(
             this.$store.state.filters
           )}`
         )

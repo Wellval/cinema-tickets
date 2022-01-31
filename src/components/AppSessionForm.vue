@@ -52,7 +52,7 @@ export default {
       console.log(hall.rows)
       axios
         .post(
-          "https://cinema-tickets-back.herokuapp.com/session/all/add",
+          "http://localhost:5500/session/all/add",
           {
             movie: movie._id,
             cinema: cinema._id,
