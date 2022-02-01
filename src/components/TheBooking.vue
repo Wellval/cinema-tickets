@@ -6,7 +6,7 @@
       <div v-for="item of row" :class="item.status" :key="item">
         <component
           v-if="seats.find(seat => seat._id === item.seat._id)"
-          @click="add(item)"
+          @click="add(item._id)"
           :is="`app-${item.seat.category}`"
         ></component>
       </div>
