@@ -57,8 +57,9 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
     this.$socket.emit("subscribe", this.session);
+    await this.$store.dispatch("getSessions");
     for (let row of this.dataSession.hallRows) {
       for (let seat of row) {
         if (
