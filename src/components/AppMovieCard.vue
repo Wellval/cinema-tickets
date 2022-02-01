@@ -1,18 +1,21 @@
 <template>
   <div class="movie-card_wrapper">
-    <router-link :to="{name: 'Movie', params: {movieId: id}}">
     <div class="poster">
-      <img :src="url" />
+      <router-link :to="{name: 'Movie', params: {movieId: id}}">
+        <img :src="url" />
+      </router-link>
     </div>
-    </router-link>
+
     <router-link :to="{name: 'Movie', params: {movieId: id}}">
-    <div class="title">{{ title }}</div>
+      <div class="title">{{ title }}</div>
     </router-link>
     <p class="movie-card_plot">{{plot}}</p>
-    <router-link :to="{name: 'Movie', params: {movieId: id}}">
-      <app-button>Tickets</app-button>
-    </router-link>
-    <app-button @click="deleteMovie" v-if="admin">Delete movie</app-button>
+    <div class="buttons-container">
+      <router-link :to="{name: 'Movie', params: {movieId: id}}">
+        <app-button>Tickets</app-button>
+      </router-link>
+      <app-button @click="deleteMovie" v-if="admin">Delete movie</app-button>
+    </div>
   </div>
 </template>
 
@@ -64,12 +67,14 @@ export default {
         session => session.movie === this.id
       );
       movieSessions.map(movieSession => {
-        axios
-          .delete(`https://cinema-tickets-back.herokuapp.com/session/${movieSession._id}`, {
+        axios.delete(
+          `https://cinema-tickets-back.herokuapp.com/session/${movieSession._id}`,
+          {
             headers: {
               "x-access-token": localStorage.getItem("token")
             }
-          })
+          }
+        );
       });
     }
   },
@@ -82,5 +87,11 @@ export default {
 <style lang="scss">
 .timeslots {
   margin-bottom: 20px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
 }
 </style>
