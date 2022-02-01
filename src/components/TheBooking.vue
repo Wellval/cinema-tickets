@@ -2,7 +2,7 @@
   <div>
     <p>{{this.time === '0:0' ? '' : this.time}}</p>
     <p>{{hall.name}}</p>
-    <div class="seats-wrapper" v-for="(row, index) of dataSession.hallRows" :key="row">
+    <div class="seats-wrapper" v-for="(row, index) of session.hallRows" :key="row">
       <div v-for="item of row" :class="item.status" :key="item">
         <component
           v-if="seats.find(seat => seat._id === item.seat._id)"
@@ -57,9 +57,8 @@ export default {
       }
     }
   },
-  async created() {
+  mounted() {
     this.$socket.emit("subscribe", this.session);
-    await this.$store.dispatch("getSessions");
     for (let row of this.dataSession.hallRows) {
       for (let seat of row) {
         if (
@@ -101,6 +100,7 @@ export default {
             return;
           }
         } else if (sec == 0 && min == 0) {
+          // this.time = '0:0';
           clearInterval(i);
           this.tickets = []
           for (let row of this.dataSession.hallRows) {
@@ -130,7 +130,7 @@ export default {
       }, 1000);
     },
     async add(id) {
-      let item;
+      let item = undefined;
       if (this.tickets.length === 0) {
           this.countdown(15, 0);
         }
@@ -155,11 +155,8 @@ export default {
       } else if (item.status === "available" || !item.status) {
         item.userId = this.$store.state.user._id;
         item.status = "toBook";
+        console.log(item.status)
         this.tickets.push(item);
-        this.$socket.emit("reserve", {
-        session: this.session,
-        userId: item.userId
-      });
       }
       this.$socket.emit("reserve", {
         session: this.session,
