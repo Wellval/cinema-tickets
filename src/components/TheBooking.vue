@@ -6,7 +6,7 @@
       <div v-for="item of row" :class="item.status" :key="item">
         <component
           v-if="seats.find(seat => seat._id === item.seat._id)"
-          @click="add(item._id)"
+          @click="add(item)"
           :is="`app-${item.seat.category}`"
         ></component>
       </div>
@@ -57,16 +57,16 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.$socket.emit("subscribe", this.session);
     for (let row of this.dataSession.hallRows) {
       for (let seat of row) {
         if (
-            seat.status === "toBook" &&
-            seat.userId !== this.$store.state.user._id
-          ) {
-            seat.status = "booked";
-          }
+          seat.status === "toBook" &&
+          seat.userId !== this.$store.state.user._id
+        ) {
+          seat.status = "booked";
+        }
         if (seat.status !== "booked") {
           seat.status = "available";
           this.$socket.emit("reserve", {
@@ -86,23 +86,22 @@ export default {
       let i = setInterval(() => {
         if (sec > 0) {
           sec--;
-          if(this.tickets.length === 0) {
+          if (this.tickets.length === 0) {
             clearInterval(i);
-            this.time = '0:0'
+            this.time = "0:0";
             return;
           }
         } else if (sec == 0 && min > 0) {
           sec = 59;
           min--;
-          if(this.tickets.length === 0) {
+          if (this.tickets.length === 0) {
             clearInterval(i);
-            this.time = '0:0';
+            this.time = "0:0";
             return;
           }
         } else if (sec == 0 && min == 0) {
-          // this.time = '0:0';
           clearInterval(i);
-          this.tickets = []
+          this.tickets = [];
           for (let row of this.dataSession.hallRows) {
             for (let seat of row) {
               if (seat.status === "toBook") {
@@ -129,19 +128,9 @@ export default {
         }
       }, 1000);
     },
-    async add(id) {
-      let item = undefined;
+    async add(item) {
       if (this.tickets.length === 0) {
-          this.countdown(15, 0);
-        }
-
-      for (let row of this.session.hallRows) {
-        for (let obj of row) {
-          if (obj._id === id) {
-            item = obj;
-            break;
-          }
-        }
+        this.countdown(15, 0);
       }
 
       if (item.status === "toBook") {
@@ -149,13 +138,17 @@ export default {
         item.userId = "";
         this.tickets.splice(this.tickets.indexOf(item), 1);
         if (this.tickets.length === 0) {
-          this.secondsLeft = '0';
-          this.minutesLeft = '0';
+          this.secondsLeft = "0";
+          this.minutesLeft = "0";
         }
-      } else if (item.status === "available") {
+      } else if (item.status === "available" || !item.status) {
         item.userId = this.$store.state.user._id;
         item.status = "toBook";
         this.tickets.push(item);
+        this.$socket.emit("reserve", {
+          session: this.session,
+          userId: item.userId
+        });
       }
       this.$socket.emit("reserve", {
         session: this.session,
@@ -171,11 +164,15 @@ export default {
         movie: this.session.movie
       };
       await axios
-        .post("https://cinema-tickets-back.herokuapp.com/stripe/add-checkout-session", params, {
-          headers: {
-            "x-access-token": localStorage.getItem("token")
+        .post(
+          "https://cinema-tickets-back.herokuapp.com/stripe/add-checkout-session",
+          params,
+          {
+            headers: {
+              "x-access-token": localStorage.getItem("token")
+            }
           }
-        })
+        )
         .then(async res => {
           Object.values(this.session.hallRows).map(obj =>
             Object.values(obj).map(val =>
@@ -238,7 +235,7 @@ export default {
     AppRecliner,
     AppLoveSeat,
     AppSofa,
-    AppButton,
+    AppButton
   }
 };
 </script>
