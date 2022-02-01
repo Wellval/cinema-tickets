@@ -237,6 +237,7 @@
      object-fit: fill;
   -webkit-transition: .7s;
   transition: .7s;
+  margin-top: 0;
 }
 
 .movie-card_wrapper .title {
