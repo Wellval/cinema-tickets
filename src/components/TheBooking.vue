@@ -129,7 +129,7 @@ export default {
         }
       }, 1000);
     },
-    async add(item) {
+    async add(id) {
       let item;
       if (this.tickets.length === 0) {
           this.countdown(15, 0);
