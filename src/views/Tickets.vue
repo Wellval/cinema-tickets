@@ -1,5 +1,8 @@
 <template>
+<div class="tickets-poster__container">
+<img class="tickets-poster" :src="movie.image_url" alt="" srcset="">
   <h2>{{movie ? movie.title : ''}}</h2>
+</div>
   <the-booking v-if="hall && seats && !payment" :hall="hall" :session="session" :seats="seats"></the-booking>
   <div v-else></div>
 </template>
@@ -71,6 +74,21 @@ export default {
 .seat-icon {
   width: 30px;
   height: 30px;
+}
+
+.tickets-poster__container {
+  display: flex;
+  align-items: flex-start;
+
+  h2 {
+    margin-top: 0;
+    margin-left: 20px;
+  }
+
+.tickets-poster {
+  width: 100px;
+  height: 140px;
+}
 }
 
 .seat-name {
