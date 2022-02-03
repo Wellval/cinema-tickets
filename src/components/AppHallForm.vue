@@ -1,14 +1,11 @@
 <template>
   <div class="forms">
-    <h3 @click="edit = !edit">{{ edit ? "To adding" : "To editing"}}</h3>
-    <app-hall-form-add v-if="!edit"></app-hall-form-add>
-    <app-hall-form-edit v-else></app-hall-form-edit>
+    <app-hall-form-add></app-hall-form-add>
   </div>
 </template>
 
 <script>
 import AppHallFormAdd from "./AppHallFormAdd";
-import AppHallFormEdit from "./AppHallFormEdit";
 
 export default {
   data() {
@@ -18,7 +15,6 @@ export default {
   },
   components: {
     AppHallFormAdd,
-    AppHallFormEdit
   }
 };
 </script>
