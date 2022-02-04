@@ -66,15 +66,15 @@ export default {
           seat.userId !== this.$store.state.user._id
         ) {
           seat.status = "booked";
-
+          
         }
         if (seat.status !== "booked") {
           seat.status = "available";
-        }
-        this.$socket.emit("reserve", {
+          this.$socket.emit("reserve", {
             session: this.dataSession,
             userId: seat.userId
           });
+        }
       }
     }
   },
