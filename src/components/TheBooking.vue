@@ -148,13 +148,14 @@ export default {
         if (item.userId !== this.$store.state.user._id) {
           item.status = "booked";
           return;
-        }
-        item.status = "available";
-        item.userId = "";
-        this.tickets.splice(this.tickets.indexOf(item), 1);
-        if (this.tickets.length === 0) {
-          this.secondsLeft = "0";
-          this.minutesLeft = "0";
+        } else {
+          item.status = "available";
+          item.userId = "";
+          this.tickets.splice(this.tickets.indexOf(item), 1);
+          if (this.tickets.length === 0) {
+            this.secondsLeft = "0";
+            this.minutesLeft = "0";
+          }
         }
       } else if (item.status === "available" || !item.status) {
         item.userId = this.$store.state.user._id;
