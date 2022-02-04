@@ -146,7 +146,7 @@ export default {
 
       if (item.status === "toBook") {
         if (item.userId !== this.$store.state.user._id) {
-          seat.status = "booked";
+          item.status = "booked";
           return;
         }
         item.status = "available";
