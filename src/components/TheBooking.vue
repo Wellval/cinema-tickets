@@ -66,14 +66,15 @@ export default {
           seat.userId !== this.$store.state.user._id
         ) {
           seat.status = "booked";
+
         }
         if (seat.status !== "booked") {
           seat.status = "available";
-          this.$socket.emit("reserve", {
+        }
+        this.$socket.emit("reserve", {
             session: this.dataSession,
             userId: seat.userId
           });
-        }
       }
     }
   },
@@ -160,7 +161,6 @@ export default {
       } else if (item.status === "available" || !item.status) {
         item.userId = this.$store.state.user._id;
         item.status = "toBook";
-        console.log(item.status);
         this.tickets.push(item);
       }
       this.$socket.emit("reserve", {
